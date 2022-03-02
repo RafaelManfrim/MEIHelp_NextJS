@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
+import { Base } from '../components/template'
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <Base>
       Hello world
-    </div>
+    </Base>
   )
 }
 
