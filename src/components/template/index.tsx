@@ -1,5 +1,6 @@
 import { Sidebar } from "./Sidebar"
 import { Header } from "./Header"
+import { ContentWrapper, MainContainer } from "./styles"
 
 interface BaseProps {
     children: React.ReactNode
@@ -7,12 +8,12 @@ interface BaseProps {
 
 export const Base = ({ children }: BaseProps) => {
     return (
-        <main>
-            <Header></Header>
-            <div>
-                <Sidebar></Sidebar>
+        <MainContainer>
+            <Header />
+            <ContentWrapper>
+                <Sidebar />
                 {children}
-            </div>
-        </main>
+            </ContentWrapper>
+        </MainContainer>
     )
 }

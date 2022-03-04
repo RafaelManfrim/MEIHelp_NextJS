@@ -1,7 +1,9 @@
+import { SidebarContainer } from "./styles"
+
 export const Sidebar = () => {
     return (
-        <div>
-
-        </div>
+        <SidebarContainer>
+            Teste
+        </SidebarContainer>
     )
 }
