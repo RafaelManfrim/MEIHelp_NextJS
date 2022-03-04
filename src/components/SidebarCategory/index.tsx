@@ -1,7 +1,13 @@
-export const SidebarCategory = () => {
-    return (
-        <div>
+import { SidebarCategoryContainer } from "./styles"
 
-        </div>
+interface SidebarCategoryProps {
+    name: string;
+}
+
+export const SidebarCategory = ({ name }: SidebarCategoryProps) => {
+    return (
+        <SidebarCategoryContainer>
+            {name}
+        </SidebarCategoryContainer>
     )
 }
