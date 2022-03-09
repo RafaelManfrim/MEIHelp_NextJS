@@ -33,7 +33,7 @@ export const HeaderButton = styled.button`
 `
 
 export const InfoArea = styled.div`
-    margin-right: 0.75rem;
+    margin-right: 1rem;
     font-size: 1rem;
     color: var(--dark-blue);
     cursor: pointer;
