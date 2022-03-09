@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
-import { Base } from '../components/template'
+import { Header } from '../components/template/Header'
+import { LandingPageContainer } from './styles'
 
 const Home: NextPage = () => {
   return (
-    <Base>
-      Hello world
-    </Base>
+    <LandingPageContainer>
+      <Header landingHeader />
+    </LandingPageContainer>
   )
 }
 
