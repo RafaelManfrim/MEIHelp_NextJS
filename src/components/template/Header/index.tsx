@@ -1,15 +1,13 @@
 import { IoLogOutOutline } from "react-icons/io5"
-import { HeaderContainer, LogoArea, ActionsArea, HeaderButton, InfoArea, LogoutButton, LogoutButtonText } from "./styles"
+import { HeaderContainer, LogoArea, ActionsArea, HeaderButton, InfoArea, LogoutButton, LogoutButtonText, UserAccountButton } from "./styles"
 
-interface HeaderProps {
-    landingHeader?: boolean;
-}
+export const Header = () => {
+    const isAuthenticated = true
 
-export const Header = ({ landingHeader }: HeaderProps) => {
     return (
         <HeaderContainer>
             <LogoArea>LOGO</LogoArea>
-            {landingHeader ? (
+            {!isAuthenticated ? (
                 <ActionsArea>
                     <HeaderButton>Entrar</HeaderButton>
                     <HeaderButton>Registrar-se</HeaderButton>
@@ -17,7 +15,7 @@ export const Header = ({ landingHeader }: HeaderProps) => {
             ) : (
                 <ActionsArea>
                     <InfoArea>
-                        Nome do usuário(empresa)
+                        <UserAccountButton>Nome do Usuário (Empresa)</UserAccountButton>
                     </InfoArea>
                     <LogoutButton>
                         <IoLogOutOutline />

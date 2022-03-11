@@ -36,15 +36,19 @@ export const InfoArea = styled.div`
     margin-right: 1rem;
     font-size: 1rem;
     color: var(--dark-blue);
+    display: flex;
+`
+
+export const UserAccountButton = styled.span`
     cursor: pointer;
 
     &:hover {
-        filter: brightness(0.5);
+        color: var(--black);
     }
 `
 
 export const LogoutButton = styled.div`
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
