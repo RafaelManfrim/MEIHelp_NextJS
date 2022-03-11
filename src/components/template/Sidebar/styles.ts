@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const SidebarContainer = styled.div`
-    /* min-height: 100%; */
-    /* min-width: 16rem; */
     background-color: var(--light-blue);
     display: flex;
     justify-content: space-between;
@@ -13,6 +11,8 @@ export const SidebarMenuArea = styled.div`
     min-height: 100%;
     padding: 3rem;
     padding-top: 1rem;
+    min-width: 14rem;
+    max-width: 16rem;
 `
 
 export const SidebarArrowArea = styled.div`
