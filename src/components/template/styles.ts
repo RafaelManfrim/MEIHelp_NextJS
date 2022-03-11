@@ -5,7 +5,7 @@ export const MainContainer = styled.div`
 `
 
 export const ContentWrapper = styled.div`
-    min-height: calc(100vh - 5rem);
+    min-height: calc(100vh - 6rem);
     display: flex;
 `
 

@@ -1,9 +1,30 @@
 import styled from 'styled-components'
 
 export const SidebarContainer = styled.div`
+    /* min-height: 100%; */
+    /* min-width: 16rem; */
+    background-color: var(--light-blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+export const SidebarMenuArea = styled.div`
     min-height: 100%;
-    min-width: 16rem;
     padding: 3rem;
     padding-top: 1rem;
+`
+
+export const SidebarArrowArea = styled.div`
+    min-height: 100%;
+    padding: 0 0.5rem;
+    padding-top: calc(50vh - 4rem);
+    cursor: pointer;
+    transition: filter 0.25s;
     background-color: var(--light-blue);
+    color: var(--white);
+
+    &:hover {
+        filter: brightness(0.95);
+    }
 `
