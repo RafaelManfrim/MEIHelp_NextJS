@@ -1,12 +1,16 @@
+import Image from "next/image"
 import { IoLogOutOutline } from "react-icons/io5"
 import { HeaderContainer, LogoArea, ActionsArea, HeaderButton, InfoArea, LogoutButton, LogoutButtonText, UserAccountButton } from "./styles"
+import logo from "../../../../public/logo-horizontal.png"
 
 export const Header = () => {
     const isAuthenticated = true
 
     return (
         <HeaderContainer>
-            <LogoArea>LOGO</LogoArea>
+            <LogoArea>
+                <Image src={logo} alt="MEIHelp" layout="responsive" />
+            </LogoArea>
             {!isAuthenticated ? (
                 <ActionsArea>
                     <HeaderButton>Entrar</HeaderButton>

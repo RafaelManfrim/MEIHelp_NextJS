@@ -11,8 +11,8 @@ export const SidebarMenuArea = styled.div`
     min-height: 100%;
     padding: 3rem;
     padding-top: 1rem;
-    min-width: 14rem;
-    max-width: 16rem;
+    min-width: 18rem;
+    max-width: 20rem;
 `
 
 export const SidebarArrowArea = styled.div`

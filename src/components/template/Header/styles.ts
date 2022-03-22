@@ -9,7 +9,11 @@ export const HeaderContainer = styled.div`
     padding: 0 3rem;
 `
 
-export const LogoArea = styled.div``
+export const LogoArea = styled.div`
+    display: block;
+    height: 5rem;
+    width: 15rem;
+`
 
 export const ActionsArea = styled.div`
     display: flex;
