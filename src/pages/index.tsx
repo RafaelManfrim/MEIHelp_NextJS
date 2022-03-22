@@ -5,7 +5,7 @@ import { LandingPageContainer } from './styles'
 const Home: NextPage = () => {
   return (
     <LandingPageContainer>
-      <Header landingHeader />
+      <Header />
     </LandingPageContainer>
   )
 }
