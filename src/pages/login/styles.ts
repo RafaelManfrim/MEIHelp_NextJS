@@ -28,6 +28,12 @@ export const LogoLogin = styled.div`
     display: block;
 `
 
+export const FormDescription = styled.span`
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: #555;
+`
+
 export const ChangeModeText = styled.span`
     margin-top: 1rem;
 `
