@@ -53,3 +53,9 @@ export const LoginPageImageContainer = styled.div`
     height: 100%;
     position: relative;
 `
+
+export const ErrorInformation = styled.span`
+    color: var(--red);
+    text-align: center;
+    margin-bottom: 1rem;
+`

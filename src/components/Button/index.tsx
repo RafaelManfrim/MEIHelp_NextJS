@@ -7,6 +7,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = ({ text, ...rest }: ButtonProps) => {
     return (
-        <ButtonComponent {...rest}>{text}</ButtonComponent>
+        <ButtonComponent type="button" {...rest}>{text}</ButtonComponent>
     )
 }
