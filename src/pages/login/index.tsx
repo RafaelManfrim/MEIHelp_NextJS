@@ -11,6 +11,7 @@ import { api } from '../../services/api'
 import { cnpjMask } from '../../utils/masks'
 
 import { LoginPageContainer, LoginFormContainer, LoginPageImageContainer, LoginForm, ChangeModeText, ChangeModeLink, LogoLogin, FormDescription, ErrorInformation } from './styles'
+import toast from 'react-hot-toast'
 
 const Login: NextPage = () => {
     const [isRegistering, setIsRegistering] = useState(true)
@@ -19,6 +20,8 @@ const Login: NextPage = () => {
     const [loading, setLoading] = useState(false)
     const [cnpj, setCnpj] = useState('')
     const [normalizedCnpj, setNormalizedCnpj] = useState('')
+    const [email, setEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
 
@@ -26,13 +29,13 @@ const Login: NextPage = () => {
         try {
             setLoading(true)
             const normalizedCnpj = cnpj.replaceAll('.', '').replace('/', '').replace('-', '')
-            const response = await api.post('/cnpj/validate/', { cnpj: normalizedCnpj })
-            if(response.status === 200){
-                setNormalizedCnpj(normalizedCnpj)
-                setCnpj('')
-                setError('')
-                setRegisterStep(2)
-            }
+            await api.post('/cnpj/validate/', { cnpj: normalizedCnpj })
+            setNormalizedCnpj(normalizedCnpj)
+            setEmail('')
+            setPhoneNumber('')
+            setCnpj('')
+            setError('')
+            setRegisterStep(2)
         } catch (err: any){
             if(err.response.status === 400) {
                 setError('O CNPJ informado é inválido ou ainda não foi cadastrado no Sefaz.')
@@ -56,34 +59,62 @@ const Login: NextPage = () => {
                 setError('As senhas precisam ser iguais.')
                 return
             }
-            // Enviar requisição buscando dados do CNPJ
-            // Receber dados e montar um objeto para enviar ao backend
-            const response = await axios.get('https://receitaws.com.br/v1/cnpj/' + normalizedCnpj)
-            const dadosMei = response.data
-
+            
             const data = {
                 cnpj: normalizedCnpj,
-                cep: dadosMei.cep,
-                corporate_name: dadosMei.name,
-                //
+                phone: phoneNumber,
+                email,
+                password,
             }
 
-            await api.post
+            const response = await api.post('/companies/', { ...data })
 
-            // Enviar requisição ao backend criando a conta
-            // Se a conta for criada, limpar os estados e redirecionar o usuário para login
-        } catch (err) {
-            setError('Houve um erro inesperado, pedimos desculpas, por favor tente novamente mais tarde.')
+            if (response.status === 201) {
+                toast.success('Sua conta foi criada!')
+                setCnpj('')
+                setNormalizedCnpj('')
+                setEmail('')
+                setPhoneNumber('')
+                setPassword('')
+                setPasswordConfirm('')
+                setError('')
+                setIsRegistering(false)
+            }
+        } catch (err: any) {
+            if(err.response.status === 400) {
+                setError('O CNPJ informado é inválido ou ainda não foi cadastrado no Sefaz.')
+            } else if(err.response.status === 401) {
+                setError('O CNPJ informado precisa ser referente a uma MEI.')
+            } else if(err.response.status === 429) {
+                setError('O sistema está sobrecarregado, por favor, aguarde um instante.')
+            } else if(err.response.status === 504) {
+                setError('O sistema está indisponível, por favor, tente novamente mais tarde.')
+            } else {
+                setError('Houve um erro inesperado, pedimos desculpas, por favor tente novamente mais tarde.')
+            }
         }
-        setIsRegistering(false)
     }
 
     function handleChangeIsRegistering() {
         setCnpj('')
+        setNormalizedCnpj('')
+        setPassword('')
+        setPasswordConfirm('')
         setError('')
         setIsRegistering(!isRegistering)
         if(registerStep === 2) {
             setRegisterStep(1)
+        }
+    }
+
+    async function handleSignIn() {
+        setLoading(true)
+        const normalizedCnpj = cnpj.replaceAll('.', '').replace('/', '').replace('-', '')
+        try {
+            await api.post('', { cnpj: normalizedCnpj, password })
+            setLoading(false)
+        } catch (err) {
+            setError('Houve um erro inesperado')
         }
     }
 
@@ -114,6 +145,8 @@ const Login: NextPage = () => {
                                 <FormDescription>
                                     Agora precisamos de mais informações.
                                 </FormDescription>
+                                <Input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} />
+                                <Input placeholder="Celular" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
                                 <Input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
                                 <Input type="password" placeholder="Confirme sua senha" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
                                 {error && <ErrorInformation>{error}</ErrorInformation>}
@@ -132,10 +165,20 @@ const Login: NextPage = () => {
                         <FormDescription>
                             Agora digite suas credenciais para acessar o sistema.
                         </FormDescription>
-                        <Input type="text" placeholder="E-mail" />
-                        <Input type="text" placeholder="CNPJ" />
-                        <Input type="text" placeholder="Senha" />
-                        <Button text="Logar" />
+                        <Input 
+                            type="text" 
+                            value={cnpjMask(cnpj)}
+                            onChange={e => setCnpj(e.target.value)}
+                            placeholder="CNPJ" 
+                        />
+                        <Input 
+                            type="password" 
+                            placeholder="Senha" 
+                            value={password} 
+                            onChange={e => setPassword(e.target.value)} 
+                        />
+                        {error && <ErrorInformation>{error}</ErrorInformation>}
+                        <Button text="Entrar" onClick={() => handleSignIn()} />
                         <ChangeModeText>
                             Ainda não possui uma conta? <ChangeModeLink onClick={handleChangeIsRegistering}>Registre-se!</ChangeModeLink>
                         </ChangeModeText>
