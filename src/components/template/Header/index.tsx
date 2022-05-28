@@ -1,29 +1,39 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { IoLogOutOutline } from "react-icons/io5"
-import { HeaderContainer, LogoArea, ActionsArea, HeaderButton, InfoArea, LogoutButton, LogoutButtonText, UserAccountButton } from "./styles"
+
 import logo from "../../../../public/logo-horizontal.png"
+import { useAuth } from "../../../contexts/AuthContext"
+
+import { HeaderContainer, LogoArea, ActionsArea, HeaderButton, InfoArea, LogoutButton, LogoutButtonText, UserAccountButton } from "./styles"
 
 export const Header = () => {
-    const isAuthenticated = true
+    const { user, tokens, signOut } = useAuth()
+    const router = useRouter()
+
+    function handleLogin() {
+        router.push('/login')
+    }
+
+    function handleProfile() {
+        router.push('/profile')
+    }
 
     return (
         <HeaderContainer>
             <LogoArea>
                 <Image src={logo} alt="MEIHelp" layout="responsive" />
             </LogoArea>
-            {!isAuthenticated ? (
-                <ActionsArea>
-                    <HeaderButton>Entrar</HeaderButton>
-                    <HeaderButton>Registrar-se</HeaderButton>
-                </ActionsArea>
+            {!tokens.refresh ? (
+                <HeaderButton onClick={handleLogin}>Entrar</HeaderButton>
             ) : (
                 <ActionsArea>
                     <InfoArea>
-                        <UserAccountButton>Nome do Usuário (Empresa)</UserAccountButton>
+                        <UserAccountButton onClick={handleProfile}>{user.corporate_name}</UserAccountButton>
                     </InfoArea>
                     <LogoutButton>
                         <IoLogOutOutline />
-                        <LogoutButtonText>Sair</LogoutButtonText>
+                        <LogoutButtonText onClick={signOut}>Sair</LogoutButtonText>
                     </LogoutButton>
                 </ActionsArea>
             )}
