@@ -12,13 +12,9 @@ export const Sidebar = () => {
         <SidebarContainer>
             {expanded && (
                 <SidebarMenuArea>
-                    <SidebarCategory name="Principal" />
-                    <NavLink name="Home" icon={<MdOutlineApps />} url="/dashboard" />
-                    <NavLink name="Cadastrar" icon={<IoAmericanFootballSharp />} url="/cadastrar" />
                     <SidebarCategory name="Menu" />
-                    <NavLink name="Link 3" icon={<IoAirplaneSharp />} url="/link3" />
-                    <NavLink name="Link 4" icon={<IoBuildSharp />} url="/link4" />
-                    <NavLink name="Link 5" icon={<IoLockClosed />} url="/link5" />
+                    <NavLink name="Home" icon={<MdOutlineApps />} url="/dashboard" />
+                    <NavLink name="Perfil" icon={<IoAmericanFootballSharp />} url="/profile" />
                 </SidebarMenuArea>
             )}
             <SidebarArrowArea onClick={() => setExpanded(!expanded)}>

@@ -8,10 +8,14 @@ interface NavLinkProps {
 }
 
 export const NavLink = ({ icon, url, name }: NavLinkProps) => {
-    const { asPath } = useRouter()
+    const { asPath, push } = useRouter()
+
+    function handleNavigate() {
+        push(url)
+    }
 
     return (
-        <NavLinkContainer href={url}>
+        <NavLinkContainer onClick={handleNavigate}>
             <NavLinkIcon isActive={asPath === url}>{icon}</NavLinkIcon>
             <NavLinkText isActive={asPath === url}>{name}</NavLinkText>
         </NavLinkContainer>

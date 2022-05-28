@@ -14,6 +14,7 @@ export const NavLinkContainer = styled.a`
     display: flex;
     align-items: center;
     transition: filter 0.1s linear;
+    cursor: pointer;
 
     &:hover {
         filter: brightness(0.85);
