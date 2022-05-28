@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import Image from 'next/image'
-import axios from 'axios'
+import toast from 'react-hot-toast'
 
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -9,12 +9,12 @@ import bgImage from "../../../public/bg-login.jpg"
 import logo from "../../../public/logo.png"
 import { api } from '../../services/api'
 import { cnpjMask } from '../../utils/masks'
+import { useAuth } from '../../contexts/AuthContext' 
 
 import { LoginPageContainer, LoginFormContainer, LoginPageImageContainer, LoginForm, ChangeModeText, ChangeModeLink, LogoLogin, FormDescription, ErrorInformation } from './styles'
-import toast from 'react-hot-toast'
 
 const Login: NextPage = () => {
-    const [isRegistering, setIsRegistering] = useState(true)
+    const [isRegistering, setIsRegistering] = useState(false)
     const [error, setError] = useState('')
     const [registerStep, setRegisterStep] = useState<1 | 2>(1)
     const [loading, setLoading] = useState(false)
@@ -24,6 +24,8 @@ const Login: NextPage = () => {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
+
+    const { signIn } = useAuth()
 
     async function handleNextStep() {
         try {
@@ -111,9 +113,10 @@ const Login: NextPage = () => {
         setLoading(true)
         const normalizedCnpj = cnpj.replaceAll('.', '').replace('/', '').replace('-', '')
         try {
-            await api.post('', { cnpj: normalizedCnpj, password })
+            signIn(normalizedCnpj, password)
             setLoading(false)
         } catch (err) {
+            console.log(err)
             setError('Houve um erro inesperado')
         }
     }
@@ -163,7 +166,7 @@ const Login: NextPage = () => {
                             <Image src={logo} alt="MEIHelp" layout="responsive" />
                         </LogoLogin>
                         <FormDescription>
-                            Agora digite suas credenciais para acessar o sistema.
+                            Digite suas credenciais para acessar o sistema.
                         </FormDescription>
                         <Input 
                             type="text" 
