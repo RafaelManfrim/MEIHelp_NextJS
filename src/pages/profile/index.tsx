@@ -20,8 +20,8 @@ const Profile: NextPage = () => {
                 Email: <EmailContainer value={email} />
                 Celular: <PhoneContainer value={phone} />
                 CEP: <CepContainer value={cep} />
-                {/* <SaveButton></SaveButton> */}
                 <Button text="Salvar alterações" />
+                <Button color='red' text="Excluir sua conta" style={{ marginTop: 16 }} />
             </ProfileContainer>
         </Base>
     )
