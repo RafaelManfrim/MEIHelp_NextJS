@@ -3,10 +3,11 @@ import { ButtonComponent } from "./styles"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     text: string;
+    color?: string;
 }
 
-export const Button = ({ text, ...rest }: ButtonProps) => {
+export const Button = ({ text, color, ...rest }: ButtonProps) => {
     return (
-        <ButtonComponent type="button" {...rest}>{text}</ButtonComponent>
+        <ButtonComponent type="button" color={color} {...rest}>{text}</ButtonComponent>
     )
 }
