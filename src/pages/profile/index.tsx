@@ -4,7 +4,7 @@ import { Button } from '../../components/Button'
 import { Base } from '../../components/template'
 import { useAuth } from '../../contexts/AuthContext'
 
-import { CepContainer, DescriptionContainer, EmailContainer, NameContainer, PhoneContainer, ProfileContainer } from './styles'
+import { CepContainer, DescriptionContainer, EmailContainer, MainContainer, NameContainer, PhoneContainer, ProfileContainer, ProfileTitle } from './styles'
 
 const Profile: NextPage = () => {
     const { user } = useAuth()
@@ -14,15 +14,20 @@ const Profile: NextPage = () => {
 
     return (
         <Base>
-            <ProfileContainer>
-                Nome da empresa: <NameContainer>{user.corporate_name}</NameContainer>
-                Descrição: <DescriptionContainer defaultValue={user.description || ''} />
-                Email: <EmailContainer value={email} />
-                Celular: <PhoneContainer value={phone} />
-                CEP: <CepContainer value={cep} />
-                <Button text="Salvar alterações" />
-                <Button color='red' text="Excluir sua conta" style={{ marginTop: 16 }} />
-            </ProfileContainer>
+            <MainContainer>
+                <ProfileTitle>
+                    Perfil
+                </ProfileTitle>
+                <ProfileContainer>
+                    Nome da empresa: <NameContainer>{user.corporate_name}</NameContainer>
+                    Descrição: <DescriptionContainer defaultValue={user.description || ''} />
+                    Email: <EmailContainer value={email} />
+                    Celular: <PhoneContainer value={phone} />
+                    CEP: <CepContainer value={cep} />
+                    <Button text="Salvar alterações" />
+                    <Button color='red' text="Excluir sua conta" style={{ marginTop: 16 }} />
+                </ProfileContainer>
+            </MainContainer>
         </Base>
     )
 }
