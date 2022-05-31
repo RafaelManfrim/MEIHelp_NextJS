@@ -1,4 +1,12 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+interface ActivityButtonProps {
+    color: string;
+}
+
+interface ActivityStatusColorProps {
+    finished: boolean;
+}
 
 export const ActivitiesContainer = styled.div`
     width: 100%;
@@ -15,9 +23,9 @@ export const ActivityContainer = styled.div`
     background-color: var(--white);
 `
 
-export const ActivityStatusColor = styled.div`
+export const ActivityStatusColor = styled.div<ActivityStatusColorProps>`
     width: 1%;
-    background-color: var(--blue);
+    background-color: var(--${({ finished }) => finished ? 'green-light' : 'blue'});
 `
 
 export const ActivityDetails = styled.div`
@@ -26,12 +34,17 @@ export const ActivityDetails = styled.div`
 `
 
 export const ActivityTitle = styled.div`
-    font-size: 1.25rem;
+    font-size: 1.40rem;
+    font-weight: bold;
+    padding: 0.5rem;
 `
 
 export const ActivityDescription = styled.div`
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     text-align: justify;
+    color: var(--dark);
+    line-height: 1.25rem;
+    padding: 0.5rem;
 `
 
 export const ActivityInfos = styled.div`
@@ -44,49 +57,38 @@ export const ActivityInfos = styled.div`
 `
 
 export const ActivityCreatedAt = styled.div`
-    font-size: 0.85rem;
+    font-size: 1rem;
+    text-align: center;
 `
 
 export const ActivityStatus = styled.div`
-    font-size: 0.85rem;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.5rem 0;
 `
 
 export const ActivityButtons = styled.div`
     display: flex;
-    margin-top: 0.5rem;
     width: 50%;
     justify-content: space-around;
 `
 
-export const ActivityFinish = styled.div`
+export const ActivityButton = styled.div<ActivityButtonProps>`
     padding: 0.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--green);
     cursor: pointer;
-    color: var(--green);
     border-radius: 0.25rem;
-`
+    transition: all 0.3s;
 
-export const ActivityEdit = styled.div`
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--yellow);
-    cursor: pointer;
-    color: var(--yellow);
-    border-radius: 0.25rem;
-`
+    ${({ color }) => css`
+        border: 2px solid var(--${color});
+        color: var(--${color});
 
-export const ActivityDelete = styled.div`
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--red);
-    cursor: pointer;
-    color: var(--red);
-    border-radius: 0.25rem;
+        &:hover {
+            background-color: var(--${color});
+            color: var(--white);
+        }
+    `}
 `

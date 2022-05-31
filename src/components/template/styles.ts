@@ -10,8 +10,7 @@ export const ContentWrapper = styled.div`
 `
 
 export const Content = styled.div`
-    margin: 2rem 3rem;
+    margin: 3rem 4rem;
     width: 100%;
     display: flex;
-    justify-content: center;
 `

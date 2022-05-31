@@ -4,7 +4,7 @@ export const ProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px;
 `
 
 export const NameContainer = styled.span`
