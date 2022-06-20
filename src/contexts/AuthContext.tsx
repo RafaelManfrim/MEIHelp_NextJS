@@ -96,12 +96,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         try {
             const response = await api.get('/companies/full_data/?id=1')
             if(!response.data.description) {
-                toast("Cadastre uma descrição para ser visto por outros MEI!", { icon: '🔔', position: 'top-right' })
+                toast("Cadastre uma descrição para ser visto por outros MEI!", { icon: '🔔' })
             }
             setUser(response.data)
         } catch (err: any) {
             if (err.response) {
-                toast.error("Houve um erro ao buscar dados de usuário.", { position: 'top-right' })
+                toast.error("Houve um erro ao buscar dados de usuário.")
             }
         }
     }
