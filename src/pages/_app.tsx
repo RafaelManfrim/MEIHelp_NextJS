@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AuthContextProvider>
       <Component {...pageProps} />
       <GlobalStyle />
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </AuthContextProvider>
   )
 }
