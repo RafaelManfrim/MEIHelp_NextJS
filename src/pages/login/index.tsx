@@ -8,7 +8,7 @@ import { Input } from '../../components/Input'
 import bgImage from "../../../public/bg-login.jpg"
 import logo from "../../../public/logo.png"
 import { api } from '../../services/api'
-import { cnpjMask } from '../../utils/masks'
+import { cnpjMask, phoneMask } from '../../utils/masks'
 import { useAuth } from '../../contexts/AuthContext' 
 
 import { LoginPageContainer, LoginFormContainer, LoginPageImageContainer, LoginForm, ChangeModeText, ChangeModeLink, LogoLogin, FormDescription, ErrorInformation } from './styles'
@@ -69,7 +69,7 @@ const Login: NextPage = () => {
                 password,
             }
 
-            const response = await api.post('/companies/', { ...data })
+            const response = await api.post('/companies/register', { ...data })
 
             if (response.status === 201) {
                 toast.success('Sua conta foi criada!')
@@ -149,7 +149,7 @@ const Login: NextPage = () => {
                                     Agora precisamos de mais informações.
                                 </FormDescription>
                                 <Input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} />
-                                <Input placeholder="Celular" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                                <Input placeholder="Celular" value={phoneMask(phoneNumber)} onChange={e => setPhoneNumber(e.target.value)} />
                                 <Input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
                                 <Input type="password" placeholder="Confirme sua senha" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
                                 {error && <ErrorInformation>{error}</ErrorInformation>}
