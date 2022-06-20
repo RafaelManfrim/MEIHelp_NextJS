@@ -18,9 +18,9 @@ export const Sidebar = () => {
                     {/* <NavLink name="DAS" icon={<IoWalletSharp />} url="/dashboard" />
                     <NavLink name="DRE" icon={<IoFileTraySharp />} url="/dashboard" />
                     <NavLink name="Fluxo de caixa" icon={<IoRepeatSharp />} url="/dashboard" />
-                    <NavLink name="Relatórios" icon={<IoLibrarySharp />} url="/dashboard" />
-                    <NavLink name="Estoque" icon={<IoScaleSharp />} url="/dashboard" />
-                    <NavLink name="Encontre outros MEI" icon={<IoTrophySharp />} url="/dashboard" /> */}
+                    <NavLink name="Relatórios" icon={<IoLibrarySharp />} url="/dashboard" /> */}
+                    <NavLink name="Estoque" icon={<IoScaleSharp />} url="/stock" />
+                    <NavLink name="Encontre outros MEI" icon={<IoTrophySharp />} url="/meeting" />
                     <NavLink name="Treinamentos" icon={<IoBookSharp />} url="/trainings" />
                     <NavLink name="Perfil" icon={<IoPersonSharp />} url="/profile" />
                 </SidebarMenuArea>
