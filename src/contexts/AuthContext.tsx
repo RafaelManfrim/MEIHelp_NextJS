@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { api } from "../services/api";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 interface AuthContextProps {
     user: User
@@ -59,8 +60,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             }
 
         } catch (err: any) {
-            console.log(err)
-            return err
+            throw new Error(err.response.data.detail)
         }
     }
 

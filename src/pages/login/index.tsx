@@ -113,11 +113,14 @@ const Login: NextPage = () => {
         setLoading(true)
         const normalizedCnpj = cnpj.replaceAll('.', '').replace('/', '').replace('-', '')
         try {
-            signIn(normalizedCnpj, password)
+            await signIn(normalizedCnpj, password)
             setLoading(false)
-        } catch (err) {
-            console.log(err)
-            setError('Houve um erro inesperado')
+        } catch (err: any) {
+            if(err.message === 'No active account found with the given credentials'){
+                setError('O e-mail ou a senha são inválidos.')
+            } else {
+                setError('Houve um erro inesperado')
+            }
         }
     }
 
