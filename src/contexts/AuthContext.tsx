@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { api } from "../services/api";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
 
 interface AuthContextProps {
     user: User
