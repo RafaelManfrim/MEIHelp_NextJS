@@ -108,6 +108,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     useEffect(() => {
         refreshToken()
     }, [router.asPath])
+    
     return (
         <AuthContext.Provider value={{ user, tokens, signIn, signOut }}>
             {children}
