@@ -21,66 +21,66 @@ export const ActivityContainer = styled.div`
     display: flex;
     margin-top: 1rem;
     background-color: var(--white);
+    border-radius: 8px;
 `
 
 export const ActivityStatusColor = styled.div<ActivityStatusColorProps>`
     width: 1%;
     background-color: var(--${({ finished }) => finished ? 'green-light' : 'blue'});
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
 `
 
 export const ActivityDetails = styled.div`
-    width: 69%;
-    padding: 0.5rem;
+    padding: 0.75rem;
+    flex: 1;
 `
 
 export const ActivityTitle = styled.div`
-    font-size: 1.40rem;
+    font-size: 1.25rem;
     font-weight: bold;
-    padding: 0.5rem;
+    margin-bottom: 0.5rem;
 `
 
 export const ActivityDescription = styled.div`
-    font-size: 0.88rem;
+    font-size: 1rem;
     text-align: justify;
     color: var(--dark);
     line-height: 1.25rem;
-    padding: 0.5rem;
 `
 
 export const ActivityInfos = styled.div`
-    width: 30%;
-    padding: 0.5rem;
+    width: 25%;
+    padding: 0.75rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-`
-
-export const ActivityCreatedAt = styled.div`
-    font-size: 1rem;
-    text-align: center;
-`
-
-export const ActivityStatus = styled.div`
-    text-align: center;
-    font-size: 1rem;
-    margin: 0.5rem 0;
+    align-items: flex-end;
+    justify-content: flex-start;
 `
 
 export const ActivityButtons = styled.div`
     display: flex;
-    width: 50%;
-    justify-content: space-around;
+    gap: 0.5rem;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+`
+
+export const ActivityCreatedAt = styled.div`
+    font-size: 1rem;
+`
+
+export const ActivityStatus = styled.div`
+    font-size: 1rem;
 `
 
 export const ActivityButton = styled.div<ActivityButtonProps>`
-    padding: 0.25rem;
+    padding: 0.125rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: 0.25rem;
-    transition: all 0.3s;
+    transition: color 0.3s, background-color 0.3s;
 
     ${({ color }) => css`
         border: 2px solid var(--${color});

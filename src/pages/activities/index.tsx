@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { IoCheckmarkSharp, IoPencilSharp, IoTrashSharp } from 'react-icons/io5'
 import { Button } from '../../components/Button'
 import { Base } from '../../components/template'
@@ -21,6 +22,31 @@ interface Activity {
 const Activities: NextPage = () => {
     const [activities, setActivities] = useState<Activity[]>([])
 
+    async function handleCreateActivity() {}
+
+    async function handleFinishActivity(id: number) {
+        try {
+            await api.patch(`/activities/${id}/`)
+            const newActivities = activities.filter(activity => {
+                if(activity.id === id) {
+                    activity.finished = true
+                    activity.finished_at = new Date().toString()
+                }
+                return activity
+            })
+            setActivities(newActivities)
+        } catch (err) {
+            console.log(err)
+            toast.error('Houve um erro ao finalizar a atividade')
+        }
+    }
+
+    async function handleEditActivity(id: number) {
+
+    }
+
+    async function handleDeleteActivity(id: number) {}
+
     useEffect(() => {
         async function loadActivities() {
             const response = await api.get('/activities/')
@@ -34,30 +60,28 @@ const Activities: NextPage = () => {
         <Base>
             <ActivitiesContainer>
                 <Button text='Cadastrar nova atividade' />
-                {activities.map(activity => {
-                    return (
-                        <ActivityContainer key={activity.id}>
-                            <ActivityStatusColor finished={activity.finished}/>
-                            <ActivityDetails>
-                                <ActivityTitle>{activity.title}</ActivityTitle>
-                                <ActivityDescription>{activity.description ? activity.description : 'Não há descrição.'}</ActivityDescription>
-                            </ActivityDetails>
-                            <ActivityInfos>
-                                <ActivityCreatedAt>Criado em: {activity.created_at}</ActivityCreatedAt>
-                                <ActivityStatus>{activity.finished ? `Finalizado: ${activity.finished_at}` : `Previsão de conclusão: ${activity.forecast_date}`}</ActivityStatus>
-                                <ActivityButtons>
-                                    {!activity.finished && (
-                                        <>
-                                            <ActivityButton color='green-light'><IoCheckmarkSharp /></ActivityButton>
-                                            <ActivityButton color='yellow'><IoPencilSharp /></ActivityButton>
-                                        </>
-                                    )}
-                                    <ActivityButton color='red'><IoTrashSharp /></ActivityButton>
-                                </ActivityButtons>
-                            </ActivityInfos>
-                        </ActivityContainer>
-                    )
-                })}
+                {activities.map(activity => (
+                    <ActivityContainer key={activity.id}>
+                        <ActivityStatusColor finished={activity.finished}/>
+                        <ActivityDetails>
+                            <ActivityTitle>{activity.title}</ActivityTitle>
+                            <ActivityDescription>{activity.description ? activity.description : 'Não há descrição.'}</ActivityDescription>
+                        </ActivityDetails>
+                        <ActivityInfos>
+                            <ActivityButtons>
+                                {!activity.finished && (
+                                    <>
+                                        <ActivityButton color='green-light' onClick={() => handleFinishActivity(activity.id)}><IoCheckmarkSharp /></ActivityButton>
+                                        <ActivityButton color='yellow'><IoPencilSharp /></ActivityButton>
+                                    </>
+                                )}
+                                <ActivityButton color='red'><IoTrashSharp /></ActivityButton>
+                            </ActivityButtons>
+                            <ActivityCreatedAt>Criado em: {new Date(activity.created_at).toLocaleDateString()}</ActivityCreatedAt>
+                            <ActivityStatus>{activity.finished ? `Concluído em: ${new Date(activity.finished_at).toLocaleDateString()}` : `Previsto para: ${new Date(activity.forecast_date).toLocaleDateString()}`}</ActivityStatus>
+                        </ActivityInfos>
+                    </ActivityContainer>
+                ))}
             </ActivitiesContainer>
         </Base>
     )
