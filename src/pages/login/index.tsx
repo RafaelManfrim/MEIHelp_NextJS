@@ -7,7 +7,7 @@ import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import bgImage from "../../../public/bg-login.jpg"
 import logo from "../../../public/logo.png"
-import { api } from '../../services/api'
+import { apiNoAuth } from '../../services/api'
 import { cnpjMask, phoneMask } from '../../utils/masks'
 import { useAuth } from '../../contexts/AuthContext' 
 
@@ -31,7 +31,7 @@ const Login: NextPage = () => {
         try {
             setLoading(true)
             const normalizedCnpj = cnpj.replaceAll('.', '').replace('/', '').replace('-', '')
-            await api.post('/cnpj/validate/', { cnpj: normalizedCnpj })
+            await apiNoAuth.post('/cnpj/validate/', { cnpj: normalizedCnpj })
             setNormalizedCnpj(normalizedCnpj)
             setEmail('')
             setPhoneNumber('')
@@ -69,7 +69,7 @@ const Login: NextPage = () => {
                 password,
             }
 
-            const response = await api.post('/companies/register', { ...data })
+            const response = await apiNoAuth.post('/companies/register/', { ...data })
 
             if (response.status === 201) {
                 toast.success('Sua conta foi criada!')
