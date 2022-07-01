@@ -1,8 +1,43 @@
 import type { NextPage } from 'next'
+import  dynamic from "next/dynamic";
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+
+const Player = dynamic(() => import("@vime/react").then((module) => module.Player), { ssr: false });
+const Youtube = dynamic(() => import("@vime/react").then((module) => module.Youtube), { ssr: false });
+const DefaultUi = dynamic(() => import("@vime/react").then((module) => module.DefaultUi), { ssr: false });
+
 import { Base } from '../../components/template'
-import { MainContainer, Training, TrainingsContainer, TrainingsTitle } from './styles'
+import { api } from '../../services/api'
+
+import { MainContainer, TrainingContainer, TrainingDescription, TrainingsContainer, TrainingsTitle, TrainingTitle } from './styles'
+
+import '@vime/core/themes/default.css';
+
+interface Training {
+    id: number
+    url: string
+    title: string
+    description: string
+}
 
 const Trainings: NextPage = () => {
+    const [trainings, setTrainings] = useState<Training[]>([])
+
+    useEffect(() => {
+        async function fetchTrainings() {
+            try {
+                const response = await api.get('/trainings/')
+                setTrainings(response.data)
+            } catch (err) {
+                console.log(err)
+                toast.error('Houve um erro ao carregar os treinamentos')
+            }
+        }
+
+        fetchTrainings()
+    }, [])
+
     return (
         <Base>
             <MainContainer>
@@ -10,24 +45,16 @@ const Trainings: NextPage = () => {
                     Treinamentos
                 </TrainingsTitle>
                 <TrainingsContainer>
-                    <Training>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
-                    <Training>
-                        <iframe width="100%" height="100%"src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
-                    <Training>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
-                    <Training>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
-                    <Training>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
-                    <Training>
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/r9buAwVBDhA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </Training>
+                    {trainings.map(training => (
+                        <TrainingContainer key={training.id}>
+                            <Player>
+                                <Youtube videoId={training.url.split('/')[3]} />
+                                <DefaultUi />
+                            </Player>
+                            <TrainingTitle>{training.title}</TrainingTitle>
+                            <TrainingDescription>{training.description}</TrainingDescription>
+                        </TrainingContainer>
+                    ))}
                 </TrainingsContainer>
             </MainContainer>
         </Base>
