@@ -1,4 +1,4 @@
-## Registro de empresa
+# Registro de empresa
 
 *Requisítos Funcionais*
 

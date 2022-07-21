@@ -1,23 +1,24 @@
-import { NavLinkContainer, NavLinkIcon, NavLinkText } from "./styles"
-import { useRouter } from "next/router"
+import { ReactNode } from 'react'
+import { useRouter } from 'next/router'
 
+import { NavLinkContainer, NavLinkIcon, NavLinkText } from './styles'
 interface NavLinkProps {
-    icon: React.ReactNode;
-    url: string;
-    name: string;
+  icon: ReactNode
+  url: string
+  name: string
 }
 
 export const NavLink = ({ icon, url, name }: NavLinkProps) => {
-    const { asPath, push } = useRouter()
+  const { asPath, push } = useRouter()
 
-    function handleNavigate() {
-        push(url)
-    }
+  function handleNavigate() {
+    push(url)
+  }
 
-    return (
-        <NavLinkContainer onClick={handleNavigate}>
-            <NavLinkIcon isActive={asPath === url}>{icon}</NavLinkIcon>
-            <NavLinkText isActive={asPath === url}>{name}</NavLinkText>
-        </NavLinkContainer>
-    )
+  return (
+    <NavLinkContainer onClick={handleNavigate}>
+      <NavLinkIcon isActive={asPath === url}>{icon}</NavLinkIcon>
+      <NavLinkText isActive={asPath === url}>{name}</NavLinkText>
+    </NavLinkContainer>
+  )
 }
