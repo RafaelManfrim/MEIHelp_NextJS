@@ -9,7 +9,7 @@ import bgImage from "../../../public/bg-login.jpg"
 import logo from "../../../public/logo.png"
 import { apiNoAuth } from '../../services/api'
 import { cnpjMask, phoneMask } from '../../utils/masks'
-import { useAuth } from '../../contexts/AuthContext' 
+import { useAuth } from '../../contexts/AuthContext'
 
 import { LoginPageContainer, LoginFormContainer, LoginPageImageContainer, LoginForm, ChangeModeText, ChangeModeLink, LogoLogin, FormDescription, ErrorInformation } from './styles'
 
@@ -38,14 +38,14 @@ const Login: NextPage = () => {
             setCnpj('')
             setError('')
             setRegisterStep(2)
-        } catch (err: any){
-            if(err.response.status === 400) {
+        } catch (err: any) {
+            if (err.response.status === 400) {
                 setError('O CNPJ informado é inválido ou ainda não foi cadastrado no Sefaz.')
-            } else if(err.response.status === 401) {
+            } else if (err.response.status === 401) {
                 setError('O CNPJ informado precisa ser referente a uma MEI.')
-            } else if(err.response.status === 429) {
+            } else if (err.response.status === 429) {
                 setError('O sistema está sobrecarregado, por favor, aguarde um instante.')
-            } else if(err.response.status === 504) {
+            } else if (err.response.status === 504) {
                 setError('O sistema está indisponível, por favor, tente novamente mais tarde.')
             } else {
                 setError('Houve um erro inesperado, pedimos desculpas, por favor tente novamente mais tarde.')
@@ -57,11 +57,11 @@ const Login: NextPage = () => {
 
     async function handleRegisterAccount() {
         try {
-            if(password !== passwordConfirm) {
+            if (password !== passwordConfirm) {
                 setError('As senhas precisam ser iguais.')
                 return
             }
-            
+
             const data = {
                 cnpj: normalizedCnpj,
                 phone: phoneNumber,
@@ -83,13 +83,13 @@ const Login: NextPage = () => {
                 setIsRegistering(false)
             }
         } catch (err: any) {
-            if(err.response.status === 400) {
+            if (err.response.status === 400) {
                 setError('O CNPJ informado é inválido ou ainda não foi cadastrado no Sefaz.')
-            } else if(err.response.status === 401) {
+            } else if (err.response.status === 401) {
                 setError('O CNPJ informado precisa ser referente a uma MEI.')
-            } else if(err.response.status === 429) {
+            } else if (err.response.status === 429) {
                 setError('O sistema está sobrecarregado, por favor, aguarde um instante.')
-            } else if(err.response.status === 504) {
+            } else if (err.response.status === 504) {
                 setError('O sistema está indisponível, por favor, tente novamente mais tarde.')
             } else {
                 setError('Houve um erro inesperado, pedimos desculpas, por favor tente novamente mais tarde.')
@@ -104,7 +104,7 @@ const Login: NextPage = () => {
         setPasswordConfirm('')
         setError('')
         setIsRegistering(!isRegistering)
-        if(registerStep === 2) {
+        if (registerStep === 2) {
             setRegisterStep(1)
         }
     }
@@ -116,7 +116,7 @@ const Login: NextPage = () => {
             await signIn(normalizedCnpj, password)
             setLoading(false)
         } catch (err: any) {
-            if(err.message === 'No active account found with the given credentials'){
+            if (err.message === 'No active account found with the given credentials') {
                 setError('O e-mail ou a senha são inválidos.')
             } else {
                 setError('Houve um erro inesperado')
@@ -137,14 +137,14 @@ const Login: NextPage = () => {
                                 <FormDescription>
                                     Para começar, precisamos do seu CNPJ.
                                 </FormDescription>
-                                <Input 
-                                    type="text" 
+                                <Input
+                                    type="text"
                                     value={cnpjMask(cnpj)}
                                     onChange={e => setCnpj(e.target.value)}
-                                    placeholder="CNPJ" 
+                                    placeholder="CNPJ"
                                 />
                                 {error && <ErrorInformation>{error}</ErrorInformation>}
-                                <Button text='Continuar' onClick={() => handleNextStep()} />
+                                <Button text='Continuar' onClick={handleNextStep} />
                             </>
                         ) : (
                             <>
@@ -156,7 +156,7 @@ const Login: NextPage = () => {
                                 <Input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
                                 <Input type="password" placeholder="Confirme sua senha" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} />
                                 {error && <ErrorInformation>{error}</ErrorInformation>}
-                                <Button text='Registrar-se' onClick={() => handleRegisterAccount()} />
+                                <Button text='Registrar-se' onClick={handleRegisterAccount} />
                             </>
                         )}
                         <ChangeModeText>
@@ -171,20 +171,20 @@ const Login: NextPage = () => {
                         <FormDescription>
                             Digite suas credenciais para acessar o sistema.
                         </FormDescription>
-                        <Input 
-                            type="text" 
+                        <Input
+                            type="text"
                             value={cnpjMask(cnpj)}
                             onChange={e => setCnpj(e.target.value)}
-                            placeholder="CNPJ" 
+                            placeholder="CNPJ"
                         />
-                        <Input 
-                            type="password" 
-                            placeholder="Senha" 
-                            value={password} 
-                            onChange={e => setPassword(e.target.value)} 
+                        <Input
+                            type="password"
+                            placeholder="Senha"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                         />
                         {error && <ErrorInformation>{error}</ErrorInformation>}
-                        <Button text="Entrar" onClick={() => handleSignIn()} />
+                        <Button text="Entrar" onClick={handleSignIn} />
                         <ChangeModeText>
                             Ainda não possui uma conta? <ChangeModeLink onClick={handleChangeIsRegistering}>Registre-se!</ChangeModeLink>
                         </ChangeModeText>

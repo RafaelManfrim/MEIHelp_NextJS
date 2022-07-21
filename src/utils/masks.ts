@@ -1,14 +1,25 @@
 export const cnpjMask = (value: string) => {
-    return value
-      .replace(/\D+/g, '') // não deixa ser digitado nenhuma letra
-      .replace(/(\d{2})(\d)/, '$1.$2') // captura 2 grupos de número o primeiro com 2 digitos e o segundo de com 3 digitos, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de número
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1/$2') // captura 2 grupos de número o primeiro e o segundo com 3 digitos, separados por /
-      .replace(/(\d{4})(\d)/, '$1-$2')
-      .replace(/(-\d{2})\d+?$/, '$1') // captura os dois últimos 2 números, com um - antes dos dois números
+  return value
+    .replace(/\D+/g, '') // Permite somente números
+    .replace(/(\d{2})(\d)/, '$1.$2') // Coloca ponto entre o segundo e o terceiro dígitos
+    .replace(/(\d{3})(\d)/, '$1.$2') // Coloca ponto entre o quinto e o sexo dígitos
+    .replace(/(\d{3})(\d)/, '$1/$2') // Coloca uma barra entre o oitavo e o nono dígitos
+    .replace(/(\d{4})(\d)/, '$1-$2') // Coloca um hífen entre o décimo e o décimo primeiro dígitos
+    .replace(/(-\d{2})\d+?$/, '$1') // Permite digitar apenas 2 dígitos depois do hífen
 }
 
 export const phoneMask = (value: string) => {
   return value
-  .replace(/\D+/g, '') // não deixa ser digitado nenhuma letra
+    .replace(/\D+/g, '') // não deixa ser digitado nenhuma letra
+    .replace(/(\d{2})(\d)/, '($1) $2') // coloca parenteses entre o segundo e o terceiro dígitos
+    .replace(/(\d{5})(\d)/, '$1-$2') // coloca hífen entre o quinto e o sexto dígitos
+    .replace(/(-\d{4})\d+?$/, '$1') // Permite digitar apenas 4 dígitos depois do hífen
+}
+
+export const cepMask = (value: string) => {
+  return value
+    .replace(/\D+/g, '') // Permite somente números
+    .replace(/(\d{2})(\d)/, '$1.$2') // Coloca ponto entre o segundo e o terceiro dígitos
+    .replace(/(\d{3})(\d)/, '$1-$2') // Coloca hífen entre o quinto e o sexto dígitos
+    .replace(/(-\d{3})\d+?$/, '$1') // Permite digitar apenas 3 dígitos depois do hífen
 }
