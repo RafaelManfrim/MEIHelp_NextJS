@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.6",
     "@vime/core": "^5.3.1",
     "@vime/react": "^5.3.1",
     "axios": "^0.27.2",
@@ -16,10 +17,12 @@
     "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.33.1",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-modal": "^3.15.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.1.3",
