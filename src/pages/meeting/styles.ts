@@ -15,10 +15,9 @@ export const UserContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
 `
-
-export const UserInfo = styled.div``
-
-export const UserLocalizationInfo = styled.div``
-
-export const UserContactInfo = styled.div``

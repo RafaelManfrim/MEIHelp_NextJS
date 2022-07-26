@@ -3,12 +3,9 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Base } from '../../components/template'
 import { api } from '../../services/api'
-import { cnpjMask } from '../../utils/masks'
+import { cepMask, cnpjMask, phoneMask } from '../../utils/masks'
 import {
-  UserContactInfo,
   UserContainer,
-  UserInfo,
-  UserLocalizationInfo,
   UsersContainer,
 } from './styles'
 
@@ -46,21 +43,24 @@ const Meeting: NextPage = () => {
       <UsersContainer>
         {users.map((user) => (
           <UserContainer key={user.id}>
-            <UserInfo>
+            <div>
+              MEI:
               <strong>{user.corporate_name}</strong>
               <p>CNPJ: {cnpjMask(user.cnpj)}</p>
-              <span>{user.description}</span>
-            </UserInfo>
-            <UserLocalizationInfo>
+              <span>Descrição: {user.description}</span>
+            </div>
+            <div>
+              Localização:
               <strong>
                 {user.city} - {user.uf}
               </strong>
-              <p>{user.cep}</p>
-            </UserLocalizationInfo>
-            <UserContactInfo>
+              <p>{cepMask(user.cep)}</p>
+            </div>
+            <div>
+              Contatos:
               <strong>{user.email}</strong>
-              <strong>{user.phone}</strong>
-            </UserContactInfo>
+              <strong>{phoneMask(user.phone)}</strong>
+            </div>
           </UserContainer>
         ))}
       </UsersContainer>
