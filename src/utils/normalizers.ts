@@ -1,15 +1,11 @@
 export const normalizeCnpj = (value: string) => {
-  return value.replaceAll('.', '').replace('/', '').replace('-', '')
+  return value.replaceAll(/(\.|-|\/)/g, '')
 }
 
 export const normalizeCep = (value: string) => {
-  return value.replaceAll('-', '').replace('.', '')
+  return value.replaceAll(/(\.|-)/g, '')
 }
 
 export const normalizePhone = (value: string) => {
-  return value
-    .replaceAll('(', '')
-    .replace(')', '')
-    .replace('-', '')
-    .replaceAll(' ', '')
+  return value.replaceAll(/(\(|\)| |-|)/g, '')
 }
