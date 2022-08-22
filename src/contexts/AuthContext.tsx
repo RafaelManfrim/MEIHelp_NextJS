@@ -99,7 +99,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function getUserFullData() {
     try {
-      const response = await api.get('/companies/full_data/?id=1')
+      const response = await api.get('/companies/full_data/')
       if (!response.data.description) {
         toast('Cadastre uma descrição para ser visto por outros MEI!', {
           icon: '🔔',
