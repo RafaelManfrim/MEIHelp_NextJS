@@ -39,11 +39,6 @@ export const Sidebar = () => {
             icon={<IoTrophySharp />}
             url="/meeting"
           />
-          <NavLink
-            name="Treinamentos"
-            icon={<IoBookSharp />}
-            url="/trainings"
-          />
           <NavLink name="Perfil" icon={<IoPersonSharp />} url="/profile" />
         </SidebarMenuArea>
       )}
