@@ -49,7 +49,6 @@ export const UsersContainer = styled.div`
 `
 
 export const UserContainer = styled.div`
-  /* background: var(--light-gray); */
   width: 100%;
   padding: 1rem;
   border-radius: 8px;

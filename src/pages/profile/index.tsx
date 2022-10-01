@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+
 import { Button } from '../../components/Button'
 import { Base } from '../../components/template'
 import { useAuth } from '../../contexts/AuthContext'
@@ -9,7 +10,9 @@ import { cepMask, phoneMask } from '../../utils/masks'
 import { normalizeCep, normalizePhone } from '../../utils/normalizers'
 
 import {
+  ActionsContainer,
   CepInput,
+  DeleteAccountButton,
   DescriptionContainer,
   EmailInput,
   InputControl,
@@ -18,7 +21,7 @@ import {
   NameContainer,
   PhoneInput,
   ProfileContainer,
-  ProfileTitle,
+  SectionTitle,
   Row,
 } from './styles'
 
@@ -28,6 +31,13 @@ const Profile: NextPage = () => {
   const [phone, setPhone] = useState(user.phone || '')
   const [cep, setCep] = useState(user.cep || '')
   const [description, setDescription] = useState(user.description || '')
+
+  function handleCancelChanges() {
+    setEmail(user.email || '')
+    setPhone(user.phone || '')
+    setCep(user.cep || '')
+    setDescription(user.description || '')
+  }
 
   async function handleSaveChanges() {
     const newCompanyData = {
@@ -39,6 +49,7 @@ const Profile: NextPage = () => {
 
     try {
       await api.patch('/companies/update_data/', { ...newCompanyData })
+      toast.success('Dados atualizados com sucesso!')
     } catch (error) {
       toast("Houve um erro ao atualizar seus dados, tente novamente mais tarde.")
     }
@@ -63,10 +74,10 @@ const Profile: NextPage = () => {
   return (
     <Base>
       <MainContainer>
-        <ProfileTitle>Perfil</ProfileTitle>
+        <SectionTitle>Perfil</SectionTitle>
         <ProfileContainer>
-          Nome da empresa: <NameContainer>{user.corporate_name}</NameContainer>
-          Descrição:{' '}
+          <NameContainer>{user.corporate_name}</NameContainer>
+          Descrição:
           <DescriptionContainer
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -94,14 +105,17 @@ const Profile: NextPage = () => {
               />
             </InputControl>
           </Row>
-          <Button text="Salvar alterações" onClick={handleSaveChanges} />
-          <Button
-            color="red"
-            text="Excluir sua conta"
-            style={{ marginTop: 16 }}
-            onClick={handleDeleteAccount}
-          />
+          <ActionsContainer>
+            <Button text="Cancelar alterações" onClick={handleCancelChanges} color="dark-gray" style={{ width: 'auto' }} />
+            <Button text="Salvar alterações" onClick={handleSaveChanges} style={{ width: 'auto' }} />
+          </ActionsContainer>
         </ProfileContainer>
+        <SectionTitle>Não está satisfeito com nosso serviço?</SectionTitle>
+        <ProfileContainer>
+          <p>Contate-nos no email <strong>sistemameihelp@gmail.com</strong> e faremos o possível para melhorar sua experiência com nosso sistema.</p>
+          <p>Se mesmo assim, o problema não for solucionado, use o botão abaixo para se desvincular de nossos serviços, seu dados serão completamente deletados de nossa base de dados, para sua segurança, o MEIHelp agradece!</p>
+        </ProfileContainer>
+        <DeleteAccountButton onClick={handleDeleteAccount}>Excluir sua conta</DeleteAccountButton>
       </MainContainer>
     </Base>
   )
