@@ -25,7 +25,7 @@ export const Sidebar = ({ expanded, changeMode }: SidebarProps) => {
         <SidebarMenuArea>
           <SidebarCategory name="Menu" />
           <NavLink name="Home" icon={<House weight="fill" />} url="/dashboard" />
-          <NavLink name="Atividades" icon={<Clock weight="fill" />} url="/activities" />
+          <NavLink name="Compromissos" icon={<Clock weight="fill" />} url="/activities" />
           <NavLink name="DAS" icon={<Wallet weight="fill" />} url="/das" />
           <NavLink name="Estoque" icon={<Package weight="fill" />} url="/stock" />
           <NavLink name="Perfil" icon={<User weight="fill" />} url="/profile" />
