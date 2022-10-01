@@ -9,10 +9,14 @@ export const ContentWrapper = styled.div`
   display: flex;
 `
 
-export const Content = styled.div`
+interface ContentProps {
+  isSidebarExpanded: boolean
+}
+
+export const Content = styled.div<ContentProps>`
   margin: 2rem;
   width: 100%;
-  max-width: calc(100vw - 20rem - 4rem);
+  max-width: calc(100vw - 4rem - ${({ isSidebarExpanded }) => isSidebarExpanded ? '20rem' : '2rem'});
   display: flex;
   background-color: var(--white);
   padding: 1rem;

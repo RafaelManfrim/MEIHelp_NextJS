@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import {
   House,
   Clock,
@@ -15,9 +13,12 @@ import { NavLink } from '../../NavLink'
 
 import { SidebarContainer, SidebarMenuArea, SidebarArrowArea } from './styles'
 
-export const Sidebar = () => {
-  const [expanded, setExpanded] = useState(true)
+interface SidebarProps {
+  expanded: boolean
+  changeMode: () => void
+}
 
+export const Sidebar = ({ expanded, changeMode }: SidebarProps) => {
   return (
     <SidebarContainer>
       {expanded && (
@@ -30,7 +31,7 @@ export const Sidebar = () => {
           <NavLink name="Perfil" icon={<User weight="fill" />} url="/profile" />
         </SidebarMenuArea>
       )}
-      <SidebarArrowArea onClick={() => setExpanded(!expanded)}>
+      <SidebarArrowArea onClick={changeMode}>
         {expanded ? (
           <CaretLeft size={20} weight="bold" />
         ) : (
