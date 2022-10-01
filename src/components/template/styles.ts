@@ -10,7 +10,11 @@ export const ContentWrapper = styled.div`
 `
 
 export const Content = styled.div`
-  margin: 3rem 4rem;
+  margin: 2rem;
   width: 100%;
+  max-width: calc(100vw - 20rem - 4rem);
   display: flex;
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 8px;
 `

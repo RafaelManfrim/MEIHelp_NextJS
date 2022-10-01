@@ -1,9 +1,11 @@
 import type { AppProps } from 'next/app'
-import { GlobalStyle } from '../styles/global'
-import { AuthContextProvider } from '../contexts/AuthContext'
 import { Toaster } from 'react-hot-toast'
 
-function MyApp({ Component, pageProps }: AppProps) {
+import { AuthContextProvider } from '../contexts/AuthContext'
+
+import { GlobalStyle } from '../styles/global'
+
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
       <Component {...pageProps} />
@@ -12,5 +14,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </AuthContextProvider>
   )
 }
-
-export default MyApp

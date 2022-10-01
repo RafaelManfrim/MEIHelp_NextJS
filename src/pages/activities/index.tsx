@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { IoCheckmarkSharp, IoPencilSharp, IoTrashSharp, IoCloseSharp } from 'react-icons/io5'
-import Modal from "react-modal"
 import { useForm } from 'react-hook-form'
 
 import { Button } from '../../components/Button'
@@ -19,7 +18,6 @@ import {
   ActivityDetails,
   ActivityInfos,
   ActivityStatus,
-  ActivityStatusColor,
   ActivityTitle,
 } from './styles'
 
@@ -104,8 +102,7 @@ const Activities: NextPage = () => {
         <ActivitiesContainer>
           <Button text="Cadastrar nova atividade" onClick={handleCreateActivity} />
           {activities.map((activity) => (
-            <ActivityContainer key={activity.id}>
-              <ActivityStatusColor finished={activity.finished} />
+            <ActivityContainer key={activity.id} finished={activity.finished}>
               <ActivityDetails>
                 <ActivityTitle>{activity.title}</ActivityTitle>
                 <ActivityDescription>
@@ -150,39 +147,7 @@ const Activities: NextPage = () => {
           ))}
         </ActivitiesContainer>
       </Base>
-      <Modal
-        isOpen={isCreatingActivityModalOpen}
-        onRequestClose={handleChangeCreateActivityModal}
-        overlayClassName="react-modal-overlay"
-        className="react-modal-content"
-      >
-        <button type="button" onClick={handleChangeCreateActivityModal} className="react-modal-close">
-          <IoCloseSharp size={20} />
-        </button>
-        <form onSubmit={handleSubmit(handleCreateActivity)}>
-          <input type="text" placeholder="titulo" />
-          <input type="text" placeholder="descrição" />
-          <input type="text" placeholder="planejado para:" />
-          <button type="submit">Cadastrar</button>
-        </form>
-      </Modal>
-      {/* <Modal isOpen={isEditingActivityModalOpen}>
-      <button type="button" onClick={onRequestClose} className="react-modal-close">
-                <IoCloseSharp size={20} />
-            </button>
-        editando
-      </Modal> */}
-      <Modal isOpen={isDeletingActivityModalOpen} onRequestClose={handleChangeDeleteActivityModal} overlayClassName="react-modal-overlay"
-        className="react-modal-content">
-        <button type="button" onClick={handleChangeDeleteActivityModal} className="react-modal-close">
-          <IoCloseSharp size={20} />
-        </button>
-        Tem certeza que deseja excluir a atividade?
-        <div>
-          <button type="button">Cancelar</button>
-          <button type="submit">Excluir</button>
-        </div>
-      </Modal>
+
     </>
   )
 }

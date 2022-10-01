@@ -4,7 +4,7 @@ interface ActivityButtonProps {
   color: string
 }
 
-interface ActivityStatusColorProps {
+interface ActivityContainerProps {
   finished: boolean
 }
 
@@ -16,21 +16,15 @@ export const ActivitiesContainer = styled.div`
   flex-direction: column;
 `
 
-export const ActivityContainer = styled.div`
+export const ActivityContainer = styled.div<ActivityContainerProps>`
   width: 100%;
   display: flex;
   margin-top: 1rem;
   background-color: var(--white);
   border-radius: 8px;
-`
-
-export const ActivityStatusColor = styled.div<ActivityStatusColorProps>`
-  width: 1%;
-  background-color: var(
+  border-left: 5px solid var(
     --${({ finished }) => (finished ? 'green-light' : 'blue')}
   );
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
 `
 
 export const ActivityDetails = styled.div`
