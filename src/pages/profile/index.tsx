@@ -23,6 +23,7 @@ import {
   ProfileContainer,
   SectionTitle,
   Row,
+  DissatisfactionContainerTitle,
 } from './styles'
 
 const Profile: NextPage = () => {
@@ -106,14 +107,14 @@ const Profile: NextPage = () => {
             </InputControl>
           </Row>
           <ActionsContainer>
-            <Button text="Cancelar alterações" onClick={handleCancelChanges} color="dark-gray" style={{ width: 'auto' }} />
-            <Button text="Salvar alterações" onClick={handleSaveChanges} style={{ width: 'auto' }} />
+            <Button text="Cancelar alterações" onClick={handleCancelChanges} color="dark-gray" />
+            <Button text="Salvar alterações" onClick={handleSaveChanges} />
           </ActionsContainer>
         </ProfileContainer>
-        <SectionTitle>Não está satisfeito com nosso serviço?</SectionTitle>
+        <DissatisfactionContainerTitle>Não está satisfeito com nosso serviço?</DissatisfactionContainerTitle>
         <ProfileContainer>
           <p>Contate-nos no email <strong>sistemameihelp@gmail.com</strong> e faremos o possível para melhorar sua experiência com nosso sistema.</p>
-          <p>Se mesmo assim, o problema não for solucionado, use o botão abaixo para se desvincular de nossos serviços, seu dados serão completamente deletados de nossa base de dados, para sua segurança, o MEIHelp agradece!</p>
+          <p>Se mesmo assim o problema não for solucionado, use o botão abaixo para se desvincular de nossos serviços, seu dados serão completamente deletados de nossa base de dados para sua segurança, o MEIHelp agradece!</p>
         </ProfileContainer>
         <DeleteAccountButton onClick={handleDeleteAccount}>Excluir sua conta</DeleteAccountButton>
       </MainContainer>

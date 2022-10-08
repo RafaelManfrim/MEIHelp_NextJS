@@ -1,11 +1,14 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { IoCheckmarkSharp, IoPencilSharp, IoTrashSharp, IoCloseSharp } from 'react-icons/io5'
-import { useForm } from 'react-hook-form'
+import { CheckCircle, Pencil, Trash } from 'phosphor-react';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { Button } from '../../components/Button'
 import { Base } from '../../components/template'
+import { CreateActivityModal } from '../../components/Modal/CreateActivityModal'
+import { EditActivityModal } from '../../components/Modal/EditActivityModal';
+import { ConfirmActivityExclusion } from '../../components/Modal/ConfirmActivityExclusion';
 import { api } from '../../services/api'
 
 import {
@@ -19,9 +22,11 @@ import {
   ActivityInfos,
   ActivityStatus,
   ActivityTitle,
+  MainContainer,
+  SectionTitle,
 } from './styles'
 
-interface Activity {
+export interface Activity {
   id: number
   title: string
   description: string
@@ -34,100 +39,114 @@ interface Activity {
 
 const Activities: NextPage = () => {
   const [activities, setActivities] = useState<Activity[]>([])
-  const [selectedActivityId, setSelectedActivityId] = useState(0)
-  const [isCreatingActivityModalOpen, setIsCreatingActivityModalOpen] = useState(false)
-  const [isEditingActivityModalOpen, setIsEditingActivityModalOpen] = useState(false)
-  const [isDeletingActivityModalOpen, setIsDeletingActivityModalOpen] = useState(false)
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
 
+  const [selectedActivityId, setSelectedActivityId] = useState(0)
   const selectedActivity = activities.find(activity => activity.id === selectedActivityId)
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: {}
-  })
-
-  function handleChangeCreateActivityModal() {
-    setIsCreatingActivityModalOpen(oldState => !oldState)
+  function addCreatedActivityToList(activity: Activity) {
+    setActivities(oldActivities => [...oldActivities, activity])
   }
 
-  async function handleCreateActivity(data) {
-    console.log("Creating activity")
-  }
-
-  function handleChangeFinishActivityModal() {
-    setIsCreatingActivityModalOpen(oldState => !oldState)
-  }
-
-  async function handleFinishActivity(id: number) {
+  async function completeActivity(id: number) {
     try {
       await api.patch(`/activities/${id}/`)
-      const newActivities = activities.filter((activity) => {
+      setActivities(oldActivities => oldActivities.map(activity => {
         if (activity.id === id) {
           activity.finished = true
-          activity.finished_at = new Date().toString()
+          activity.finished_at = new Date().toISOString()
         }
+
         return activity
-      })
-      setActivities(newActivities)
-    } catch (err) {
-      console.log(err)
-      toast.error('Houve um erro ao finalizar a atividade')
+      }))
+      toast.success('Atividade concluída com sucesso!')
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao completar atividade')
     }
   }
 
-  function handleChangeEditActivityModal() {
-    setIsCreatingActivityModalOpen(oldState => !oldState)
+  function handleEditActivity(id: number) {
+    setSelectedActivityId(id)
+    setOpenEditModal(true)
   }
 
-  async function handleEditActivity(id: number) { }
+  function editActivity(activity: Activity) {
+    setActivities(oldActivities => oldActivities.map(oldActivity => {
+      if (oldActivity.id === activity.id) {
+        return activity
+      }
 
-  function handleChangeDeleteActivityModal() {
-    setIsDeletingActivityModalOpen(oldState => !oldState)
+      return oldActivity
+    }))
   }
 
+  function handleDeleteActivity(id: number) {
+    setSelectedActivityId(id)
+    setOpenDeleteConfirmation(true)
+  }
 
-  async function handleDeleteActivity(id: number) { }
+  async function deleteActivity(id: number) {
+    try {
+      await api.delete(`/activities/${id}/`)
+      setActivities(oldActivities => oldActivities.filter(activity => activity.id !== id))
+      toast.success('Compromisso excluído com sucesso!')
+      setOpenDeleteConfirmation(false)
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao excluir o compromisso')
+    }
+  }
 
   useEffect(() => {
     async function loadActivities() {
-      const response = await api.get('/activities/')
-      setActivities(response.data)
+      try {
+        const response = await api.get('/activities/')
+        setActivities(response.data)
+      } catch (err) {
+        console.log(err)
+        toast.error('Houve um erro ao carregar as atividades')
+      }
     }
 
     loadActivities()
   }, [])
 
   return (
-    <>
-      <Base>
+    <Base>
+      <MainContainer>
+        <SectionTitle>Compromissos</SectionTitle>
         <ActivitiesContainer>
-          <Button text="Cadastrar nova atividade" onClick={handleCreateActivity} />
+          <Dialog.Root open={openCreateModal} onOpenChange={setOpenCreateModal}>
+            <Dialog.Trigger asChild>
+              <Button text="Cadastrar novo compromisso" />
+            </Dialog.Trigger>
+            <CreateActivityModal closeModal={() => setOpenCreateModal(false)} onCreate={addCreatedActivityToList} />
+          </Dialog.Root>
           {activities.map((activity) => (
             <ActivityContainer key={activity.id} finished={activity.finished}>
               <ActivityDetails>
                 <ActivityTitle>{activity.title}</ActivityTitle>
                 <ActivityDescription>
-                  {activity.description
-                    ? activity.description
-                    : 'Não há descrição.'}
+                  {activity.description ? activity.description : 'Não há descrição.'}
                 </ActivityDescription>
               </ActivityDetails>
               <ActivityInfos>
                 <ActivityButtons>
                   {!activity.finished && (
                     <>
-                      <ActivityButton
-                        color="green-light"
-                        onClick={() => handleFinishActivity(activity.id)}
-                      >
-                        <IoCheckmarkSharp />
+                      <ActivityButton color="green-light" onClick={() => completeActivity(activity.id)}>
+                        <CheckCircle weight='fill' size={20} />
                       </ActivityButton>
-                      <ActivityButton color="yellow">
-                        <IoPencilSharp />
+                      <ActivityButton color="blue" onClick={() => handleEditActivity(activity.id)}>
+                        <Pencil weight='fill' size={20} />
                       </ActivityButton>
                     </>
                   )}
-                  <ActivityButton color="red" onClick={handleChangeDeleteActivityModal}>
-                    <IoTrashSharp />
+                  <ActivityButton color="red" onClick={() => handleDeleteActivity(activity.id)}>
+                    <Trash weight='fill' size={20} />
                   </ActivityButton>
                 </ActivityButtons>
                 <ActivityCreatedAt>
@@ -146,9 +165,22 @@ const Activities: NextPage = () => {
             </ActivityContainer>
           ))}
         </ActivitiesContainer>
-      </Base>
-
-    </>
+      </MainContainer>
+      {openEditModal && selectedActivity && (
+        <Dialog.Root open={openEditModal} onOpenChange={setOpenEditModal}>
+          <EditActivityModal
+            closeModal={() => setOpenEditModal(false)}
+            onEdit={editActivity}
+            activity={selectedActivity!}
+          />
+        </Dialog.Root>
+      )}
+      {openDeleteConfirmation && selectedActivity && (
+        <Dialog.Root open={openDeleteConfirmation} onOpenChange={setOpenDeleteConfirmation}>
+          <ConfirmActivityExclusion activityId={selectedActivity.id} onDelete={deleteActivity} />
+        </Dialog.Root>
+      )}
+    </Base >
   )
 }
 

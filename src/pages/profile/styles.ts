@@ -16,14 +16,22 @@ export const SectionTitle = styled.div`
   border-bottom: 1px solid var(--gray);
 `
 
+export const DissatisfactionContainerTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gray);
+`
+
 export const ProfileContainer = styled.section`
   display: flex;
   flex-direction: column;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   font-size: 1rem;
   width: 100%;
   max-width: 768px;
-  margin-bottom: 1rem;
 
   p {
     text-align: center;
