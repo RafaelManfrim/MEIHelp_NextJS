@@ -38,11 +38,14 @@ export interface StockDTO {
 
 const Stock: NextPage = () => {
   const [stocks, setStocks] = useState<StockDTO[]>([])
-
   const [isCreatingStock, setIsCreatingStock] = useState(false)
 
   function addStockToList(stock: StockDTO) {
     setStocks(oldStocks => [...oldStocks, stock])
+  }
+
+  function removeStockFromList(id: number) {
+    setStocks(oldStocks => oldStocks.filter(stock => stock.id !== id))
   }
 
   useEffect(() => {
@@ -74,7 +77,7 @@ const Stock: NextPage = () => {
           </Dialog.Root>
         </CreateStockContainer>
         <StocksContainer>
-          {stocks.map(stock => <StockComponent key={stock.id} stock={stock} />)}
+          {stocks.map(stock => <StockComponent key={stock.id} stock={stock} onDelete={removeStockFromList} />)}
         </StocksContainer>
       </MainStocksContainer>
     </Base>

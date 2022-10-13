@@ -44,7 +44,7 @@ export function CreateStockModal({ closeModal, onCreate }: CreateActivityModalPr
   return (
     <Dialog.Portal>
       <Overlay />
-      <Content onEscapeKeyDown={(e: KeyboardEvent) => e.preventDefault()}>
+      <Content onEscapeKeyDown={(e) => e.preventDefault()}>
         <Dialog.Title>Criar estoque</Dialog.Title>
         <CloseButton>
           <X weight='fill' size='20' />

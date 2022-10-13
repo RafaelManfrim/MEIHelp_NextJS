@@ -84,3 +84,9 @@ export const FormGroup = styled.div`
     color: var(--red);
   }
 `
+
+export const ModalMessage = styled.p`
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 1rem;
+`

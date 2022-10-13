@@ -1,10 +1,14 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import * as Popover from '@radix-ui/react-popover';
 import { CaretDown, CaretUp, X } from "phosphor-react"
 import { useState } from "react"
+import toast from 'react-hot-toast';
 
 import { StockDTO } from "../../pages/stock"
+import { api } from '../../services/api';
 import { phoneMask } from '../../utils/masks';
 import { Button } from "../Button"
+import { ConfirmStockExclusionModal } from './Modals/Stock/ConfirmExclusion';
 
 import {
   ActionsTableData,
@@ -20,13 +24,27 @@ import {
 
 interface StockComponentProps {
   stock: StockDTO
+  onDelete: (id: number) => void
 }
 
-export function Stock({ stock }: StockComponentProps) {
+export function Stock({ stock, onDelete }: StockComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [openDeleteStock, setOpenDeleteStock] = useState(false);
 
   function handleChangeIsExpanded() {
     setIsExpanded(oldState => !oldState)
+  }
+
+  async function handleDeleteStock() {
+    try {
+      await api.delete(`/stocks/${stock.id}/`)
+      onDelete(stock.id)
+      toast.success('Estoque excluído com sucesso!')
+      setOpenDeleteStock(false)
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao excluir o estoque')
+    }
   }
 
   async function handleRemoveProviderFromProduct(providerId: string, productId: string) {
@@ -102,7 +120,12 @@ export function Stock({ stock }: StockComponentProps) {
           </table>
           <StockComponentContentActions>
             <Button text="Editar estoque" color="light-blue" style={{ width: 'auto' }} />
-            <Button text="Excluir estoque" color="red-light" style={{ width: 'auto' }} />
+            <Dialog.Root open={openDeleteStock} onOpenChange={setOpenDeleteStock}>
+              <Dialog.Trigger asChild>
+                <Button text="Excluir estoque" color="red-light" style={{ width: 'auto' }} />
+              </Dialog.Trigger>
+              <ConfirmStockExclusionModal onDelete={handleDeleteStock} />
+            </Dialog.Root>
           </StockComponentContentActions>
         </StockComponentContent>
       )}
