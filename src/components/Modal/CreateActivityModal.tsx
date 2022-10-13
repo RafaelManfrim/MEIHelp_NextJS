@@ -33,8 +33,6 @@ export function CreateActivityModal({ closeModal, onCreate }: CreateActivityModa
     resolver: zodResolver(schema)
   })
 
-  console.log('abriu')
-
   const forecastDate = watch('forecast_date') || ''
 
   async function handleCreateActivity(data: NewActivityFormSchema) {
