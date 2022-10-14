@@ -15,7 +15,6 @@ export const TabsList = styled(Tabs.List)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
   border-bottom: 1px solid var(--gray);
   width: 100%;
@@ -25,15 +24,18 @@ export const TabsTrigger = styled(Tabs.Trigger)`
   padding: 0.5rem 1rem;
   border: 0;
   border-bottom: 2px solid var(--light-blue);
-  background: transparent;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
   transition: all 0.3s ease;
+  background: var(--max-light-gray);
 
   &[data-state="active"] {
-    border-bottom: 2px solid var(--blue);
+    background: var(--light-blue);
+    color: var(--white);
   }
 
-  &:hover {
-    color: var(--blue);
+  &:not([data-state="active"]):hover {
+    background: var(--light-gray);
   }
 `
 
