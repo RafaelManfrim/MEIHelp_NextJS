@@ -101,7 +101,7 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
                             <strong>{provider.name}</strong>
                             <p>{provider.email}</p>
                             <p>{phoneMask(provider.phone)}</p>
-                            <Button text="Remover fornecedor" color="red-light" />
+                            {/* <Button text="Remover fornecedor" color="red-light" /> */}
                           </PopoverContent>
                         </Popover.Portal>
                       </Popover.Root>

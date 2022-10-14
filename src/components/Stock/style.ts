@@ -106,7 +106,7 @@ export const PopoverContent = styled(Popover.Content)`
   flex-direction: column;
   gap: 1rem;
 
-  width: 350px;
+  width: 256px;
 `
 
 export const PopoverClose = styled(Popover.Close)`

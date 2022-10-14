@@ -1,6 +1,43 @@
 import styled from 'styled-components'
+import * as Tabs from '@radix-ui/react-tabs';
 
-export const MainStocksContainer = styled.div`
+export const TabsRoot = styled(Tabs.Root)`
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const TabsList = styled(Tabs.List)`
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--gray);
+  width: 100%;
+`
+
+export const TabsTrigger = styled(Tabs.Trigger)`
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-bottom: 2px solid var(--light-blue);
+  background: transparent;
+  transition: all 0.3s ease;
+
+  &[data-state="active"] {
+    border-bottom: 2px solid var(--blue);
+  }
+
+  &:hover {
+    color: var(--blue);
+  }
+`
+
+export const TabsContent = styled(Tabs.Content)`
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -18,7 +55,7 @@ export const SectionTitle = styled.h2`
   width: 100%;
 `
 
-export const CreateStockContainer = styled.div`
+export const CreateButtonContainer = styled.div`
   width: 100%;
   max-width: 768px;
 `
@@ -26,47 +63,4 @@ export const CreateStockContainer = styled.div`
 export const StocksContainer = styled.div`
   width: 100%;
   margin-top: 1rem;
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem; */
 `
-
-// export const StocksContainerHeader = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: flex-start;
-// `
-
-// export const StocksContainerTitle = styled.div`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   margin-bottom: 1rem;
-// `
-// export const CreateStockButton = styled.div`
-//   padding: 0 1rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 28px;
-//   background-color: var(--light-blue);
-//   outline: var(--blue);
-//   border: var(--blue);
-//   border-radius: 0.25rem;
-//   color: var(--white);
-//   font-weight: bold;
-//   cursor: pointer;
-
-//   &:hover {
-//     filter: brightness(0.9);
-//   }
-// `
-
-
-
-// export const StockContainer = styled.div`
-//   background-color: var(--white);
-
-//   width: 100%;
-//   padding: 1rem;
-//   border-radius: 8px;
-// `
