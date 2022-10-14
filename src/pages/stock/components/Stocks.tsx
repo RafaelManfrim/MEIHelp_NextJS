@@ -9,7 +9,7 @@ import { Stock as StockComponent } from '../../../components/Stock'
 import { CreateStockModal } from '../../../components/Stock/Modals/Stock/CreateStockModal';
 import { api } from '../../../services/api';
 
-import { CreateButtonContainer, SectionTitle, StocksContainer } from "../styles";
+import { ContentContainer, CreateButtonContainer, SectionTitle } from "../styles";
 
 export function Stocks() {
   const [stocks, setStocks] = useState<StockDTO[]>([])
@@ -48,9 +48,9 @@ export function Stocks() {
           <CreateStockModal closeModal={() => setIsCreatingStock(false)} onCreate={addStockToList} />
         </Dialog.Root>
       </CreateButtonContainer>
-      <StocksContainer>
+      <ContentContainer>
         {stocks.map(stock => <StockComponent key={stock.id} stock={stock} onDelete={removeStockFromList} />)}
-      </StocksContainer>
+      </ContentContainer>
     </>
   )
 }

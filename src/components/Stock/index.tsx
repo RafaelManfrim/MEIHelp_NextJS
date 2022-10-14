@@ -47,10 +47,6 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
     }
   }
 
-  async function handleRemoveProviderFromProduct(providerId: string, productId: string) {
-    console.log("Produto:", productId, "Fornecedor:", providerId)
-  }
-
   return (
     <StockComponentContainer>
       <StockComponentHeader onClick={handleChangeIsExpanded}>
@@ -65,7 +61,6 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
           <StockComponentContentHeader>
             <strong>Produtos</strong>
             <Button text="Adicionar produto" color="green-light" style={{ width: 'auto' }} />
-            {/* Implementar modal de adicionar de produto */}
           </StockComponentContentHeader>
           <table>
             <thead>
@@ -82,7 +77,13 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
               {stock.stock_products.map(product => (
                 <tr key={product.id}>
                   <td>{product.product.name}</td>
-                  <td>{product.quantity}</td>
+                  <ActionsTableData>
+                    <div>
+                      <Button text="-" style={{ width: 'auto' }} />
+                      {product.quantity}
+                      <Button text="+" style={{ width: 'auto' }} />
+                    </div>
+                  </ActionsTableData>
                   <td>{product.product.category}</td>
                   <td>{product.product.description}</td>
                   <ProvidersTableData>
@@ -101,19 +102,14 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
                             <strong>{provider.name}</strong>
                             <p>{provider.email}</p>
                             <p>{phoneMask(provider.phone)}</p>
-                            {/* <Button text="Remover fornecedor" color="red-light" /> */}
                           </PopoverContent>
                         </Popover.Portal>
                       </Popover.Root>
-
                     ))}
                   </ProvidersTableData>
-                  <ActionsTableData>
-                    <div>
-                      <Button text="Editar produto" color="light-blue" style={{ width: 'auto' }} />
-                      <Button text="Excluir produto" color="red-light" style={{ width: 'auto' }} />
-                    </div>
-                  </ActionsTableData>
+                  <td>
+                    <Button text="Remover do estoque" color="red-light" style={{ width: 'auto' }} />
+                  </td>
                 </tr>
               ))}
             </tbody>

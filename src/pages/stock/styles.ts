@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import * as Tabs from '@radix-ui/react-tabs';
+import * as Popover from '@radix-ui/react-popover';
 
 export const TabsRoot = styled(Tabs.Root)`
   width: 100%;
@@ -62,7 +63,84 @@ export const CreateButtonContainer = styled.div`
   max-width: 768px;
 `
 
-export const StocksContainer = styled.div`
+export const ContentContainer = styled.div`
   width: 100%;
   margin-top: 1rem;
+`
+
+export const TableContainer = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+
+  thead {
+    tr {
+      background-color: var(--light-blue);
+
+      th {
+        padding: 0.5rem;
+        color: var(--white);
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      &:nth-child(odd) {
+        background-color: var(--max-light-gray);
+      }
+    }
+  }
+`
+
+export const ActionsTableData = styled.td`
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+`
+
+export const ProvidersTableData = styled.td`
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+`
+
+export const PopoverContent = styled(Popover.Content)`
+  background-color: var(--white);
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: 256px;
+`
+
+export const PopoverClose = styled(Popover.Close)`
+  position: absolute;
+  background: transparent;
+  border: 0;
+  top: 1rem;
+  right: 1rem;
+  line-height: 0;
+  cursor: pointer;
+  color: var(--black);
+  padding: 0.25rem;
+  border-radius: 16px;
+  
+  &:hover {
+    background-color: var(--light-gray);
+    transition: background-color 0.3s;
+  }
 `

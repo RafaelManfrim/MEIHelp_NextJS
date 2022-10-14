@@ -92,7 +92,8 @@ export const ActionsTableData = styled.td`
   div {
     display: flex;
     justify-content: center;
-    gap: 0.25rem;
+    align-items: center;
+    gap: 0.5rem;
   }
 `
 

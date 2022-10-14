@@ -14,20 +14,22 @@ export interface ProviderDTO {
 
 export interface ProductDTO {
   id: number
-  product: {
-    id: number
-    providers: ProviderDTO[]
-    name: string
-    category: number
-    description: string
-  }
+  providers: ProviderDTO[]
+  name: string
+  category: string
+  description: string
+}
+
+interface StockProductDTO {
+  id: number
+  product: ProductDTO
   quantity: number
 }
 
 export interface StockDTO {
   id: number
   name: string
-  stock_products: ProductDTO[]
+  stock_products: StockProductDTO[]
 }
 
 export default function Stock() {
