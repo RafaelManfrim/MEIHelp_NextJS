@@ -8,10 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '../../../Button';
 import { api } from '../../../../services/api';
 import { ProviderDTO } from '../../../../pages/stock';
-
-import { CloseButton, Collums, Content, FormGroup, Overlay } from '../styles';
 import { phoneMask } from '../../../../utils/masks';
 import { normalizePhone } from '../../../../utils/normalizers';
+
+import { CloseButton, Collums, Content, FormGroup, Overlay } from '../styles';
 
 const schema = zod.object({
   name: zod.string().max(100, { message: 'O nome deve ter no máximo 100 caracteres.' }),
@@ -19,35 +19,41 @@ const schema = zod.object({
   phone: zod.string().max(15, { message: 'O telefone deve ter no máximo 15 caracteres.' }),
 })
 
-type NewProviderFormSchema = zod.infer<typeof schema>
+type EditProviderFormSchema = zod.infer<typeof schema>
 
-interface CreateProviderModalProps {
+interface EditProviderModalProps {
   closeModal: () => void;
-  onCreate: (provider: ProviderDTO) => void
+  onEdit: (provider: ProviderDTO) => void
+  provider: ProviderDTO
 }
 
-export function CreateProviderModal({ closeModal, onCreate }: CreateProviderModalProps) {
-  const { register, handleSubmit, formState, reset, watch } = useForm<NewProviderFormSchema>({
+export function EditProviderModal({ closeModal, onEdit, provider }: EditProviderModalProps) {
+  const { register, handleSubmit, formState, reset, watch } = useForm<EditProviderFormSchema>({
+    defaultValues: {
+      name: provider.name,
+      email: provider.email,
+      phone: provider.phone
+    },
     resolver: zodResolver(schema)
   })
 
   const phone = watch('phone') || ''
 
-  async function handleCreateProvider(data: NewProviderFormSchema) {
-    const provider = {
+  async function handleEditProvider(data: EditProviderFormSchema) {
+    const editedProvider = {
       name: data.name,
       email: data.email,
       phone: normalizePhone(data.phone)
     }
 
     try {
-      const response = await api.post('/providers/', { ...provider })
-      onCreate(response.data)
-      toast.success('Fornecedor cadastrado com sucesso!')
+      const response = await api.patch(`/providers/${provider.id}/`, { ...editedProvider })
+      onEdit(response.data)
+      toast.success('Fornecedor atualizado com sucesso!')
       closeModal()
     } catch (error) {
       console.log(error)
-      toast.error('Houve um erro ao cadastrar o fonecedor')
+      toast.error('Houve um erro ao atualizar o fonecedor')
     }
 
     reset()
@@ -57,12 +63,12 @@ export function CreateProviderModal({ closeModal, onCreate }: CreateProviderModa
     <Dialog.Portal>
       <Overlay />
       <Content onEscapeKeyDown={(e) => e.preventDefault()}>
-        <Dialog.Title>Criar fornecedor</Dialog.Title>
+        <Dialog.Title>Editar estoque</Dialog.Title>
         <CloseButton>
           <X weight='fill' size='20' />
         </CloseButton>
 
-        <form onSubmit={handleSubmit(handleCreateProvider)}>
+        <form onSubmit={handleSubmit(handleEditProvider)}>
           <FormGroup>
             <label htmlFor="name">Nome:</label>
             <input
@@ -95,7 +101,7 @@ export function CreateProviderModal({ closeModal, onCreate }: CreateProviderModa
             <Dialog.Close asChild>
               <Button text="Cancelar" color="gray" style={{ color: "#222" }} />
             </Dialog.Close>
-            <Button text="Cadastrar" type="submit" color="green-light" />
+            <Button text="Editar" type="submit" color="light-blue" />
           </Collums>
         </form>
       </Content>

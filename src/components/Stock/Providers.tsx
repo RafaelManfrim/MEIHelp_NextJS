@@ -10,6 +10,7 @@ import { phoneMask } from '../../utils/masks';
 import { ActionsTableData, ContentContainer, CreateButtonContainer, SectionTitle, TableContainer } from "../../pages/stock/styles";
 import { CreateProviderModal } from './Modals/Providers/CreateProviderModal';
 import { ConfirmProviderExclusionModal } from './Modals/Providers/ConfirmProviderExclusion';
+import { EditProviderModal } from './Modals/Providers/EditProviderModal';
 
 export function Providers() {
   const [providers, setProviders] = useState<ProviderDTO[]>([]);
@@ -22,6 +23,16 @@ export function Providers() {
 
   function addProviderToList(provider: ProviderDTO) {
     setProviders([...providers, provider])
+  }
+
+  function handleEditProvider(id: number) {
+    setSelectedProviderId(id)
+    setIsEditingProvider(true)
+  }
+
+  function editProviderInList(provider: ProviderDTO) {
+    const updatedProviders = providers.map(p => p.id === provider.id ? provider : p)
+    setProviders(updatedProviders)
   }
 
   function handleDeleteProvider(id: number) {
@@ -84,7 +95,7 @@ export function Providers() {
                 <td>{phoneMask(provider.phone)}</td>
                 <ActionsTableData>
                   <div>
-                    <Button text="Editar fornecedor" color="light-blue" style={{ width: 'auto' }} />
+                    <Button text="Editar fornecedor" color="light-blue" onClick={() => handleEditProvider(provider.id)} style={{ width: 'auto' }} />
                     <Button text="Excluir fornecedor" color="red-light" onClick={() => handleDeleteProvider(provider.id)} style={{ width: 'auto' }} />
                   </div>
                 </ActionsTableData>
@@ -93,6 +104,11 @@ export function Providers() {
           </tbody>
         </TableContainer>
       </ContentContainer>
+      {isEditingProvider && selectedProvider && (
+        <Dialog.Root open={isEditingProvider} onOpenChange={setIsEditingProvider}>
+          <EditProviderModal provider={selectedProvider} closeModal={() => setIsEditingProvider(false)} onEdit={editProviderInList} />
+        </Dialog.Root>
+      )}
       {isDeletingProvider && selectedProvider && (
         <Dialog.Root open={isDeletingProvider} onOpenChange={setIsDeletingProvider}>
           <ConfirmProviderExclusionModal onDelete={deleteProvider} />
