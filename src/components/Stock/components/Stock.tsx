@@ -9,6 +9,7 @@ import { api } from '../../../services/api';
 import { phoneMask } from '../../../utils/masks';
 import { Button } from "../../Button"
 import { ConfirmStockExclusionModal } from '../Modals/Stock/ConfirmExclusion';
+import { EditStockModal } from '../Modals/Stock/EditStockModal';
 
 import {
   ActionsTableData,
@@ -24,11 +25,13 @@ import {
 
 interface StockComponentProps {
   stock: StockDTO
+  onEdit: (stock: StockDTO) => void
   onDelete: (id: number) => void
 }
 
-export function Stock({ stock, onDelete }: StockComponentProps) {
+export function Stock({ stock, onEdit, onDelete }: StockComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [openEditStock, setOpenEditStock] = useState(false);
   const [openDeleteStock, setOpenDeleteStock] = useState(false);
 
   function handleChangeIsExpanded() {
@@ -115,7 +118,12 @@ export function Stock({ stock, onDelete }: StockComponentProps) {
             </tbody>
           </table>
           <StockComponentContentActions>
-            <Button text="Editar estoque" color="light-blue" style={{ width: 'auto' }} />
+            <Dialog.Root open={openEditStock} onOpenChange={setOpenEditStock}>
+              <Dialog.Trigger asChild>
+                <Button text="Editar estoque" color="light-blue" style={{ width: 'auto' }} />
+              </Dialog.Trigger>
+              <EditStockModal onEdit={onEdit} closeModal={() => setOpenEditStock(false)} stock={stock} />
+            </Dialog.Root>
             <Dialog.Root open={openDeleteStock} onOpenChange={setOpenDeleteStock}>
               <Dialog.Trigger asChild>
                 <Button text="Excluir estoque" color="red-light" style={{ width: 'auto' }} />
