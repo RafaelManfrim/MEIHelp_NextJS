@@ -10,11 +10,13 @@ import { phoneMask } from '../../utils/masks';
 
 import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 import { RemoveProviderFromProductModal } from './Modals/Product/RemoveProviderFromProductModal';
+import { DeleteProductModal } from './Modals/Product/DeleteProductModal';
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [isRemovingProvider, setIsRemovingProvider] = useState(false)
+  const [isDeletingProduct, setIsDeletingProduct] = useState(false)
 
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
   const selectedProduct = products.find(product => product.id === selectedProductId)
@@ -45,7 +47,22 @@ export function Products() {
     }
   }
 
+  function handleDeleteProduct(id: number) {
+    setSelectedProductId(id)
+    setIsDeletingProduct(true)
+  }
 
+  async function deleteProduct() {
+    try {
+      await api.delete(`/products/${selectedProductId}/`)
+      setProducts(oldProducts => oldProducts.filter(product => product.id !== selectedProductId))
+      toast.success('Produto removido com sucesso!')
+      setIsDeletingProduct(false)
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao remover o produto.')
+    }
+  }
 
   useEffect(() => {
     async function fetchProducts() {
@@ -118,7 +135,7 @@ export function Products() {
                 <ActionsTableData>
                   <div>
                     <Button text="Editar produto" style={{ width: 'auto' }} />
-                    <Button text="Excluir produto" color="red-light" style={{ width: 'auto' }} />
+                    <Button text="Excluir produto" color="red-light" onClick={() => handleDeleteProduct(product.id)} style={{ width: 'auto' }} />
                   </div>
                 </ActionsTableData>
               </tr>
@@ -129,6 +146,11 @@ export function Products() {
       {isRemovingProvider && (
         <Dialog.Root open={isRemovingProvider} onOpenChange={setIsRemovingProvider}>
           <RemoveProviderFromProductModal onDelete={removeProviderFromProduct} />
+        </Dialog.Root>
+      )}
+      {isDeletingProduct && selectedProduct && (
+        <Dialog.Root open={isDeletingProduct} onOpenChange={setIsDeletingProduct}>
+          <DeleteProductModal onDelete={deleteProduct} />
         </Dialog.Root>
       )}
     </>
