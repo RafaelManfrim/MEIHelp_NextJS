@@ -19,6 +19,18 @@ export function Stocks() {
     setStocks(oldStocks => [...oldStocks, stock])
   }
 
+  function onRemoveProductFromStock(stockId: number, productId: number) {
+    setStocks(oldStocks => oldStocks.filter(stock => {
+      if (stock.id === stockId) {
+        let editedStockProducts = stock.stock_products.filter(stockProduct => stockProduct.product.id !== productId)
+
+        stock.stock_products = editedStockProducts
+      }
+
+      return stock
+    }))
+  }
+
   function editStockInList(stockEdited: StockDTO) {
     setStocks(oldStocks => oldStocks.map(stock => stock.id === stockEdited.id ? stockEdited : stock))
   }
@@ -53,7 +65,15 @@ export function Stocks() {
         </Dialog.Root>
       </CreateButtonContainer>
       <ContentContainer>
-        {stocks.map(stock => <StockComponent key={stock.id} stock={stock} onEdit={editStockInList} onDelete={removeStockFromList} />)}
+        {stocks.map(stock => (
+          <StockComponent
+            key={stock.id}
+            stock={stock}
+            onRemoveProductFromStock={onRemoveProductFromStock}
+            onEdit={editStockInList}
+            onDelete={removeStockFromList}
+          />
+        ))}
       </ContentContainer>
     </>
   )

@@ -10,6 +10,7 @@ import { phoneMask } from '../../../utils/masks';
 import { Button } from "../../Button"
 import { ConfirmStockExclusionModal } from '../Modals/Stock/ConfirmExclusion';
 import { EditStockModal } from '../Modals/Stock/EditStockModal';
+import { RemoveProductFromStockModal } from '../Modals/Stock/RemoveProductFromStock';
 
 import {
   ActionsTableData,
@@ -27,15 +28,37 @@ interface StockComponentProps {
   stock: StockDTO
   onEdit: (stock: StockDTO) => void
   onDelete: (id: number) => void
+  onRemoveProductFromStock: (stockId: number, productId: number) => void
 }
 
-export function Stock({ stock, onEdit, onDelete }: StockComponentProps) {
+export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock }: StockComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [openEditStock, setOpenEditStock] = useState(false);
   const [openDeleteStock, setOpenDeleteStock] = useState(false);
 
+  const [isRemovingProductFromStock, setIsRemovingProductFromStock] = useState(false)
+
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+
   function handleChangeIsExpanded() {
     setIsExpanded(oldState => !oldState)
+  }
+
+  function handleRemoveProductFromStock(productId: number) {
+    setSelectedProductId(productId)
+    setIsRemovingProductFromStock(true)
+  }
+
+  async function removeProductFromStock() {
+    try {
+      await api.post('/stock_product/remove_product/', { stock_id: stock.id, product_id: selectedProductId })
+      onRemoveProductFromStock(stock.id, selectedProductId!)
+      toast.success('Produto removido do estoque com sucesso!')
+      setIsRemovingProductFromStock(false)
+    } catch (err) {
+      console.log(err)
+      toast.error('Houve um erro ao remover o produto do estoque')
+    }
   }
 
   async function handleDeleteStock() {
@@ -111,7 +134,7 @@ export function Stock({ stock, onEdit, onDelete }: StockComponentProps) {
                     ))}
                   </ProvidersTableData>
                   <td>
-                    <Button text="Remover do estoque" color="red-light" style={{ width: 'auto' }} />
+                    <Button text="Remover do estoque" color="red-light" style={{ width: 'auto' }} onClick={() => handleRemoveProductFromStock(product.id)} />
                   </td>
                 </tr>
               ))}
@@ -132,6 +155,11 @@ export function Stock({ stock, onEdit, onDelete }: StockComponentProps) {
             </Dialog.Root>
           </StockComponentContentActions>
         </StockComponentContent>
+      )}
+      {isRemovingProductFromStock && selectedProductId && (
+        <Dialog.Root open={isRemovingProductFromStock} onOpenChange={setIsRemovingProductFromStock}>
+          <RemoveProductFromStockModal onDelete={removeProductFromStock} />
+        </Dialog.Root>
       )}
     </StockComponentContainer>
   )

@@ -8,9 +8,10 @@ import { Button } from '../Button';
 import { api } from '../../services/api';
 import { phoneMask } from '../../utils/masks';
 
-import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 import { RemoveProviderFromProductModal } from './Modals/Product/RemoveProviderFromProductModal';
 import { DeleteProductModal } from './Modals/Product/DeleteProductModal';
+
+import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
