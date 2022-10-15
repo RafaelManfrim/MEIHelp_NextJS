@@ -9,7 +9,7 @@ import { Button } from '../../../Button';
 import { api } from '../../../../services/api';
 import { StockDTO } from '../../../../pages/stock';
 
-import { CloseButton, Collums, Content, FormGroup, Overlay } from './styles';
+import { CloseButton, Collums, Content, FormGroup, Overlay } from '../styles';
 
 const schema = zod.object({
   name: zod.string().max(100, { message: 'O nome deve ter no máximo 100 caracteres.' }),
@@ -17,12 +17,12 @@ const schema = zod.object({
 
 type NewStockFormSchema = zod.infer<typeof schema>
 
-interface CreateActivityModalProps {
+interface CreateStockModalProps {
   closeModal: () => void;
   onCreate: (stock: StockDTO) => void
 }
 
-export function CreateStockModal({ closeModal, onCreate }: CreateActivityModalProps) {
+export function CreateStockModal({ closeModal, onCreate }: CreateStockModalProps) {
   const { register, handleSubmit, formState, reset } = useForm<NewStockFormSchema>({
     resolver: zodResolver(schema)
   })

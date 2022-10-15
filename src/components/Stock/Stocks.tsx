@@ -2,14 +2,14 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { StockDTO } from '..';
+import { StockDTO } from '../../pages/stock';
 
-import { Button } from '../../../components/Button';
-import { Stock as StockComponent } from '../../../components/Stock'
-import { CreateStockModal } from '../../../components/Stock/Modals/Stock/CreateStockModal';
-import { api } from '../../../services/api';
+import { Button } from '../Button';
+import { Stock as StockComponent } from './components/Stock'
+import { CreateStockModal } from './Modals/Stock/CreateStockModal';
+import { api } from '../../services/api';
 
-import { ContentContainer, CreateButtonContainer, SectionTitle } from "../styles";
+import { ContentContainer, CreateButtonContainer, SectionTitle } from "../../pages/stock/styles";
 
 export function Stocks() {
   const [stocks, setStocks] = useState<StockDTO[]>([])

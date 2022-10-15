@@ -5,7 +5,6 @@ export const StockComponentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--gray);
   margin-top: 1rem;
   border-radius: 6px;
 `
@@ -17,6 +16,8 @@ export const StockComponentHeader = styled.div`
   cursor: pointer;
   background-color: var(--light-gray);
   padding: 0.75rem;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 
   strong {
     font-size: 1.25rem;
@@ -30,6 +31,10 @@ export const StockComponentHeader = styled.div`
 export const StockComponentContent = styled.div`
   padding: 0.75rem;
   width: 100%;
+  border: 1px solid var(--light-gray);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top: 0;
 
   table {
     width: 100%;

@@ -4,11 +4,11 @@ import { CaretDown, CaretUp, X } from "phosphor-react"
 import { useState } from "react"
 import toast from 'react-hot-toast';
 
-import { StockDTO } from "../../pages/stock"
-import { api } from '../../services/api';
-import { phoneMask } from '../../utils/masks';
-import { Button } from "../Button"
-import { ConfirmStockExclusionModal } from './Modals/Stock/ConfirmExclusion';
+import { StockDTO } from "../../../pages/stock"
+import { api } from '../../../services/api';
+import { phoneMask } from '../../../utils/masks';
+import { Button } from "../../Button"
+import { ConfirmStockExclusionModal } from '../Modals/Stock/ConfirmExclusion';
 
 import {
   ActionsTableData,
@@ -20,7 +20,7 @@ import {
   StockComponentContentActions,
   StockComponentContentHeader,
   StockComponentHeader
-} from "./style"
+} from "../style"
 
 interface StockComponentProps {
   stock: StockDTO

@@ -3,12 +3,12 @@ import * as Popover from '@radix-ui/react-popover';
 import { X } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { ProductDTO } from '..';
-import { Button } from '../../../components/Button';
-import { api } from '../../../services/api';
-import { phoneMask } from '../../../utils/masks';
+import { ProductDTO } from '../../pages/stock';
+import { Button } from '../Button';
+import { api } from '../../services/api';
+import { phoneMask } from '../../utils/masks';
 
-import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../styles";
+import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);

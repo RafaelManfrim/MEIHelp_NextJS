@@ -3,21 +3,21 @@ import { X } from 'phosphor-react';
 import { Button } from '../../../Button';
 import { CloseButton, Collums, Content, ModalMessage, Overlay } from '../styles';
 
-interface ConfirmStockExclusionProps {
+interface ConfirmProviderExclusionProps {
   onDelete: () => void
 }
 
-export function ConfirmStockExclusionModal({ onDelete }: ConfirmStockExclusionProps) {
+export function ConfirmProviderExclusionModal({ onDelete }: ConfirmProviderExclusionProps) {
   return (
     <Dialog.Portal>
       <Overlay />
       <Content onEscapeKeyDown={(e) => e.preventDefault()}>
-        <Dialog.Title>Deletar estoque</Dialog.Title>
+        <Dialog.Title>Excluir fornecedor</Dialog.Title>
         <CloseButton>
           <X weight='fill' size='20' />
         </CloseButton>
         <ModalMessage>
-          Tem certeza que deseja deletar esse estoque? Essa ação não poderá ser desfeita.
+          Tem certeza que deseja deletar esse fornecedor? Essa ação não poderá ser desfeita.
         </ModalMessage>
         <Collums style={{ marginTop: 16 }}>
           <Dialog.Close asChild>

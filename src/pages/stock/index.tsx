@@ -1,7 +1,7 @@
 import { Base } from '../../components/template'
-import { Stocks } from './components/Stocks'
-import { Products } from './components/Products'
-import { Providers } from './components/Providers'
+import { Stocks } from '../../components/Stock/Stocks'
+import { Products } from '../../components/Stock/Products'
+import { Providers } from '../../components/Stock/Providers'
 
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from './styles'
 
