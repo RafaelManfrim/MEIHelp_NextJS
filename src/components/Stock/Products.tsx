@@ -9,9 +9,43 @@ import { api } from '../../services/api';
 import { phoneMask } from '../../utils/masks';
 
 import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
+import { RemoveProviderFromProductModal } from './Modals/Product/RemoveProviderFromProductModal';
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
+
+  const [isRemovingProvider, setIsRemovingProvider] = useState(false)
+
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
+  const selectedProduct = products.find(product => product.id === selectedProductId)
+
+  const [selectedProviderId, setSelectedProviderId] = useState<number | null>(null)
+
+  function handleRemoveProviderFromProduct(productId: number, providerId: number) {
+    setSelectedProductId(productId)
+    setSelectedProviderId(providerId)
+    setIsRemovingProvider(true)
+  }
+
+  async function removeProviderFromProduct() {
+    try {
+      await api.post(`/products/${selectedProductId}/remove_provider/`, { provider_id: selectedProviderId })
+      const updatedProducts = products.map(product => {
+        if (product.id === selectedProductId) {
+          product.providers = product.providers.filter(provider => provider.id !== selectedProviderId)
+        }
+        return product
+      })
+      setProducts(updatedProducts)
+      toast.success('Fornecedor removido com sucesso!')
+      setIsRemovingProvider(false)
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao remover o fornecedor do produto')
+    }
+  }
+
+
 
   useEffect(() => {
     async function fetchProducts() {
@@ -70,7 +104,11 @@ export function Products() {
                           <strong>{provider.name}</strong>
                           <p>{provider.email}</p>
                           <p>{phoneMask(provider.phone)}</p>
-                          <Button text="Remover fornecedor" color="red-light" />
+                          <Button
+                            text="Remover fornecedor"
+                            color="red-light"
+                            onClick={() => handleRemoveProviderFromProduct(product.id, provider.id)}
+                          />
                         </PopoverContent>
                       </Popover.Portal>
                     </Popover.Root>
@@ -88,6 +126,11 @@ export function Products() {
           </tbody>
         </TableContainer>
       </ContentContainer>
+      {isRemovingProvider && (
+        <Dialog.Root open={isRemovingProvider} onOpenChange={setIsRemovingProvider}>
+          <RemoveProviderFromProductModal onDelete={removeProviderFromProduct} />
+        </Dialog.Root>
+      )}
     </>
   )
 }
