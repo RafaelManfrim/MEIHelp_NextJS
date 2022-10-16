@@ -14,10 +14,12 @@ import { DeleteProductModal } from './Modals/Product/DeleteProductModal';
 
 import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 import { AddProviderToProductModal } from './Modals/Product/AddProviderToProductModal';
+import { CreateProductModal } from './Modals/Product/CreateProductModal';
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
+  const [isCreatingProduct, setIsCreatingProduct] = useState(false);
   const [isRemovingProvider, setIsRemovingProvider] = useState(false)
   const [isDeletingProduct, setIsDeletingProduct] = useState(false)
   const [isAddingProviderToProduct, setIsAddingProviderToProduct] = useState(false)
@@ -26,6 +28,10 @@ export function Products() {
   const selectedProduct = products.find(product => product.id === selectedProductId)
 
   const [selectedProviderId, setSelectedProviderId] = useState<number | null>(null)
+
+  function addProductToList(product: ProductDTO) {
+    setProducts(oldProducts => [...oldProducts, product])
+  }
 
   function handleAddProviderToProduct(productId: number) {
     setSelectedProductId(productId)
@@ -103,10 +109,11 @@ export function Products() {
     <>
       <SectionTitle>Produtos</SectionTitle>
       <CreateButtonContainer>
-        <Dialog.Root>
+        <Dialog.Root open={isCreatingProduct} onOpenChange={setIsCreatingProduct}>
           <Dialog.Trigger asChild>
             <Button text='Cadastrar produto' />
           </Dialog.Trigger>
+          <CreateProductModal closeModal={() => setIsCreatingProduct(false)} onCreate={addProductToList} />
         </Dialog.Root>
       </CreateButtonContainer>
       <ContentContainer>
