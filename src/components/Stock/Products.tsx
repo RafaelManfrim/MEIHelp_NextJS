@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Popover from '@radix-ui/react-popover';
-import { X } from 'phosphor-react';
-import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { X } from 'phosphor-react';
+
 import { ProductDTO } from '../../pages/stock';
 import { Button } from '../Button';
 import { api } from '../../services/api';
@@ -12,17 +13,36 @@ import { RemoveProviderFromProductModal } from './Modals/Product/RemoveProviderF
 import { DeleteProductModal } from './Modals/Product/DeleteProductModal';
 
 import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
+import { AddProviderToProductModal } from './Modals/Product/AddProviderToProductModal';
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [isRemovingProvider, setIsRemovingProvider] = useState(false)
   const [isDeletingProduct, setIsDeletingProduct] = useState(false)
+  const [isAddingProviderToProduct, setIsAddingProviderToProduct] = useState(false)
 
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
   const selectedProduct = products.find(product => product.id === selectedProductId)
 
   const [selectedProviderId, setSelectedProviderId] = useState<number | null>(null)
+
+  function handleAddProviderToProduct(productId: number) {
+    setSelectedProductId(productId)
+    setIsAddingProviderToProduct(true)
+  }
+
+  async function addProviderToProduct(providerId: number) {
+    try {
+      const response = await api.post(`products/${selectedProductId}/add_provider/`, { provider_id: providerId })
+      setProducts(oldProducts => oldProducts.map(product => product.id === selectedProductId ? response.data : product))
+      toast.success('Fornecedor adicionado com sucesso!')
+      setIsAddingProviderToProduct(false)
+    } catch (error) {
+      toast.error('Erro ao adicionar fornecedor.')
+      console.log(error)
+    }
+  }
 
   function handleRemoveProviderFromProduct(productId: number, providerId: number) {
     setSelectedProductId(productId)
@@ -131,7 +151,7 @@ export function Products() {
                       </Popover.Portal>
                     </Popover.Root>
                   ))}
-                  <Button text="+" style={{ width: 'auto' }} />
+                  <Button text="+" style={{ width: 'auto' }} onClick={() => handleAddProviderToProduct(product.id)} />
                 </ProvidersTableData>
                 <ActionsTableData>
                   <div>
@@ -144,7 +164,12 @@ export function Products() {
           </tbody>
         </TableContainer>
       </ContentContainer>
-      {isRemovingProvider && (
+      {isAddingProviderToProduct && selectedProductId && (
+        <Dialog.Root open={isAddingProviderToProduct} onOpenChange={setIsAddingProviderToProduct}>
+          <AddProviderToProductModal onAdd={addProviderToProduct} productProvidersIds={selectedProduct?.providers.map(provider => provider.id) || []} />
+        </Dialog.Root>
+      )}
+      {isRemovingProvider && selectedProductId && selectedProviderId && (
         <Dialog.Root open={isRemovingProvider} onOpenChange={setIsRemovingProvider}>
           <RemoveProviderFromProductModal onDelete={removeProviderFromProduct} />
         </Dialog.Root>

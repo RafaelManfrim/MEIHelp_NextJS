@@ -204,7 +204,7 @@ const Login: NextPage = () => {
                   onChange={(e) => setPasswordConfirm(e.target.value)}
                 />
                 {error && <ErrorInformation>{error}</ErrorInformation>}
-                <Button text="Registrar-se" onClick={handleRegisterAccount} />
+                <Button text={loading ? "Carregando" : "Registrar-se"} onClick={handleRegisterAccount} />
               </>
             )}
             <ChangeModeText>
@@ -235,7 +235,7 @@ const Login: NextPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && <ErrorInformation>{error}</ErrorInformation>}
-            <Button text="Entrar" onClick={handleSignIn} />
+            <Button text={loading ? "Carregando" : "Entrar"} onClick={handleSignIn} />
             <ChangeModeText>
               Ainda não possui uma conta?{' '}
               <ChangeModeLink onClick={handleChangeIsRegistering}>

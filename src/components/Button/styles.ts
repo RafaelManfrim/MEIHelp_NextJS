@@ -5,7 +5,7 @@ interface ButtonProps {
 }
 
 export const ButtonComponent = styled.button<ButtonProps>`
-  padding: 0 2rem;
+  padding: 0 1.25rem;
   height: 2.5rem;
   background-color: var(--${({ color }) => color || 'light-blue'});
   outline: var(--blue);
