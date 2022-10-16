@@ -2,7 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { StockDTO } from '../../pages/stock';
+import { StockDTO, StockProductDTO } from '../../pages/stock';
 
 import { Button } from '../Button';
 import { Stock as StockComponent } from './components/Stock'
@@ -17,6 +17,24 @@ export function Stocks() {
 
   function addStockToList(stock: StockDTO) {
     setStocks(oldStocks => [...oldStocks, stock])
+  }
+
+  function onEditProductAmount(stockId: number, stockProduct: StockProductDTO) {
+    setStocks(oldStocks => oldStocks.filter(stock => {
+      if (stock.id === stockId) {
+        let editedStockProducts = stock.stock_products.map(stockProductFiltered => {
+          if (stockProductFiltered.id !== stockProduct.id) {
+            return stockProductFiltered
+          } else {
+            return stockProduct
+          }
+        })
+
+        stock.stock_products = editedStockProducts
+      }
+
+      return stock
+    }))
   }
 
   function onRemoveProductFromStock(stockId: number, productId: number) {
@@ -69,6 +87,7 @@ export function Stocks() {
           <StockComponent
             key={stock.id}
             stock={stock}
+            onEditProductAmount={onEditProductAmount}
             onRemoveProductFromStock={onRemoveProductFromStock}
             onEdit={editStockInList}
             onDelete={removeStockFromList}

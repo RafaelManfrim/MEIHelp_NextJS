@@ -20,7 +20,7 @@ export interface ProductDTO {
   description: string
 }
 
-interface StockProductDTO {
+export interface StockProductDTO {
   id: number
   product: ProductDTO
   quantity: number

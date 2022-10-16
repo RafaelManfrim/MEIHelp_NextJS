@@ -4,7 +4,7 @@ import { CaretDown, CaretUp, X } from "phosphor-react"
 import { useState } from "react"
 import toast from 'react-hot-toast';
 
-import { StockDTO } from "../../../pages/stock"
+import { StockDTO, StockProductDTO } from "../../../pages/stock"
 import { api } from '../../../services/api';
 import { phoneMask } from '../../../utils/masks';
 import { Button } from "../../Button"
@@ -29,12 +29,15 @@ interface StockComponentProps {
   onEdit: (stock: StockDTO) => void
   onDelete: (id: number) => void
   onRemoveProductFromStock: (stockId: number, productId: number) => void
+  onEditProductAmount: (stockId: number, stockProduct: StockProductDTO) => void
 }
 
-export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock }: StockComponentProps) {
+export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock, onEditProductAmount }: StockComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [openEditStock, setOpenEditStock] = useState(false);
   const [openDeleteStock, setOpenDeleteStock] = useState(false);
+
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   const [isRemovingProductFromStock, setIsRemovingProductFromStock] = useState(false)
 
@@ -42,6 +45,38 @@ export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock }: Sto
 
   function handleChangeIsExpanded() {
     setIsExpanded(oldState => !oldState)
+  }
+
+  function handleAddProductToStock() {
+    setIsAddingProduct(true)
+  }
+
+  async function handleAddAmountToProduct(productId: number) {
+    try {
+      const response = await api.post('/stock_product/add_product/', {
+        quantity: 1,
+        product_id: productId,
+        stock_id: stock.id
+      })
+      onEditProductAmount(stock.id, response.data)
+    } catch (err) {
+      toast.error('Erro ao adicionar quantidade ao produto.')
+      console.log(err)
+    }
+  }
+
+  async function handleRemoveAmountFromProduct(productId: number) {
+    try {
+      const response = await api.post('/stock_product/decrease_product_quantity/', {
+        quantity: 1,
+        product_id: productId,
+        stock_id: stock.id
+      })
+      onEditProductAmount(stock.id, response.data)
+    } catch (err) {
+      toast.error('Erro ao remover quantidade do produto.')
+      console.log(err)
+    }
   }
 
   function handleRemoveProductFromStock(productId: number) {
@@ -105,9 +140,9 @@ export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock }: Sto
                   <td>{product.product.name}</td>
                   <ActionsTableData>
                     <div>
-                      <Button text="-" style={{ width: 'auto' }} />
+                      <Button text="-" disabled={product.quantity === 1} onClick={() => handleRemoveAmountFromProduct(product.id)} style={{ width: 'auto' }} />
                       {product.quantity}
-                      <Button text="+" style={{ width: 'auto' }} />
+                      <Button text="+" onClick={() => handleAddAmountToProduct(product.id)} style={{ width: 'auto' }} />
                     </div>
                   </ActionsTableData>
                   <td>{product.product.category}</td>
