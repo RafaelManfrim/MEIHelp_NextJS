@@ -135,7 +135,7 @@ export function CreateProductModal({ onCreate, closeModal }: CreateProductProps)
               <Button text="Cancelar" color="gray" style={{ color: "#222" }} />
             </Dialog.Close>
             <Button
-              text="Adicionar"
+              text="Cadastrar"
               type="submit"
               color="green-light"
               disabled={!selectedCategoryId || isLoading}

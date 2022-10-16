@@ -11,15 +11,17 @@ import { phoneMask } from '../../utils/masks';
 
 import { RemoveProviderFromProductModal } from './Modals/Product/RemoveProviderFromProductModal';
 import { DeleteProductModal } from './Modals/Product/DeleteProductModal';
-
-import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 import { AddProviderToProductModal } from './Modals/Product/AddProviderToProductModal';
 import { CreateProductModal } from './Modals/Product/CreateProductModal';
+import { EditProductModal } from './Modals/Product/EditProductModal';
+
+import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [isCreatingProduct, setIsCreatingProduct] = useState(false);
+  const [isEditingProduct, setIsEditingProduct] = useState(false);
   const [isRemovingProvider, setIsRemovingProvider] = useState(false)
   const [isDeletingProduct, setIsDeletingProduct] = useState(false)
   const [isAddingProviderToProduct, setIsAddingProviderToProduct] = useState(false)
@@ -31,6 +33,15 @@ export function Products() {
 
   function addProductToList(product: ProductDTO) {
     setProducts(oldProducts => [...oldProducts, product])
+  }
+
+  function handleEditProduct(id: number) {
+    setSelectedProductId(id)
+    setIsEditingProduct(true)
+  }
+
+  function editProductInList(product: ProductDTO) {
+    setProducts(oldProducts => oldProducts.map(oldProduct => oldProduct.id === product.id ? product : oldProduct))
   }
 
   function handleAddProviderToProduct(productId: number) {
@@ -162,7 +173,7 @@ export function Products() {
                 </ProvidersTableData>
                 <ActionsTableData>
                   <div>
-                    <Button text="Editar produto" style={{ width: 'auto' }} />
+                    <Button text="Editar produto" onClick={() => handleEditProduct(product.id)} style={{ width: 'auto' }} />
                     <Button text="Excluir produto" color="red-light" onClick={() => handleDeleteProduct(product.id)} style={{ width: 'auto' }} />
                   </div>
                 </ActionsTableData>
@@ -171,6 +182,11 @@ export function Products() {
           </tbody>
         </TableContainer>
       </ContentContainer>
+      {isEditingProduct && selectedProductId && (
+        <Dialog.Root open={isEditingProduct} onOpenChange={setIsEditingProduct}>
+          <EditProductModal onEdit={editProductInList} product={selectedProduct!} closeModal={() => setIsEditingProduct(false)} />
+        </Dialog.Root>
+      )}
       {isAddingProviderToProduct && selectedProductId && (
         <Dialog.Root open={isAddingProviderToProduct} onOpenChange={setIsAddingProviderToProduct}>
           <AddProviderToProductModal onAdd={addProviderToProduct} productProvidersIds={selectedProduct?.providers.map(provider => provider.id) || []} />
