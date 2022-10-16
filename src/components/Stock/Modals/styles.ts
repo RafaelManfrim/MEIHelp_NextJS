@@ -61,7 +61,7 @@ export const FormGroup = styled.div`
     color: var(--dark-blue);
   }
 
-  input, textarea {
+  input, textarea, select {
     background-color: var(--max-light-gray);
     outline: none;
     padding: 1rem;

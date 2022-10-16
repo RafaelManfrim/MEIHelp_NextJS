@@ -19,6 +19,21 @@ export function Stocks() {
     setStocks(oldStocks => [...oldStocks, stock])
   }
 
+  function addProductToStock(stockId: number, stockProduct: StockProductDTO) {
+    const updatedStocks = stocks.map(stock => {
+      if (stock.id === stockId) {
+        return {
+          ...stock,
+          stock_products: [...stock.stock_products, stockProduct]
+        }
+      }
+
+      return stock
+    })
+
+    setStocks(updatedStocks)
+  }
+
   function onEditProductAmount(stockId: number, stockProduct: StockProductDTO) {
     setStocks(oldStocks => oldStocks.filter(stock => {
       if (stock.id === stockId) {
@@ -87,6 +102,7 @@ export function Stocks() {
           <StockComponent
             key={stock.id}
             stock={stock}
+            onAddProductToStock={addProductToStock}
             onEditProductAmount={onEditProductAmount}
             onRemoveProductFromStock={onRemoveProductFromStock}
             onEdit={editStockInList}

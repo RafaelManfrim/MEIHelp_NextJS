@@ -8,6 +8,7 @@ import { StockDTO, StockProductDTO } from "../../../pages/stock"
 import { api } from '../../../services/api';
 import { phoneMask } from '../../../utils/masks';
 import { Button } from "../../Button"
+import { AddProductToStockModal } from '../Modals/Stock/AddProductToStockModal';
 import { ConfirmStockExclusionModal } from '../Modals/Stock/ConfirmExclusion';
 import { EditStockModal } from '../Modals/Stock/EditStockModal';
 import { RemoveProductFromStockModal } from '../Modals/Stock/RemoveProductFromStock';
@@ -26,13 +27,14 @@ import {
 
 interface StockComponentProps {
   stock: StockDTO
+  onAddProductToStock: (stockId: number, stockProduct: StockProductDTO) => void
   onEdit: (stock: StockDTO) => void
   onDelete: (id: number) => void
   onRemoveProductFromStock: (stockId: number, productId: number) => void
   onEditProductAmount: (stockId: number, stockProduct: StockProductDTO) => void
 }
 
-export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock, onEditProductAmount }: StockComponentProps) {
+export function Stock({ stock, onAddProductToStock, onEdit, onDelete, onRemoveProductFromStock, onEditProductAmount }: StockComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [openEditStock, setOpenEditStock] = useState(false);
   const [openDeleteStock, setOpenDeleteStock] = useState(false);
@@ -121,7 +123,7 @@ export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock, onEdi
         <StockComponentContent>
           <StockComponentContentHeader>
             <strong>Produtos</strong>
-            <Button text="Adicionar produto" color="green-light" style={{ width: 'auto' }} />
+            <Button text="Adicionar produto" color="green-light" onClick={handleAddProductToStock} style={{ width: 'auto' }} />
           </StockComponentContentHeader>
           <table>
             <thead>
@@ -140,9 +142,9 @@ export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock, onEdi
                   <td>{product.product.name}</td>
                   <ActionsTableData>
                     <div>
-                      <Button text="-" disabled={product.quantity === 1} onClick={() => handleRemoveAmountFromProduct(product.id)} style={{ width: 'auto' }} />
+                      <Button text="-" disabled={product.quantity <= 1} onClick={() => handleRemoveAmountFromProduct(product.product.id)} style={{ width: 'auto' }} />
                       {product.quantity}
-                      <Button text="+" onClick={() => handleAddAmountToProduct(product.id)} style={{ width: 'auto' }} />
+                      <Button text="+" onClick={() => handleAddAmountToProduct(product.product.id)} style={{ width: 'auto' }} />
                     </div>
                   </ActionsTableData>
                   <td>{product.product.category}</td>
@@ -190,6 +192,11 @@ export function Stock({ stock, onEdit, onDelete, onRemoveProductFromStock, onEdi
             </Dialog.Root>
           </StockComponentContentActions>
         </StockComponentContent>
+      )}
+      {isAddingProduct && (
+        <Dialog.Root open={isAddingProduct} onOpenChange={setIsAddingProduct}>
+          <AddProductToStockModal stock={stock} closeModal={() => setIsAddingProduct(false)} onAdd={onAddProductToStock} />
+        </Dialog.Root>
       )}
       {isRemovingProductFromStock && selectedProductId && (
         <Dialog.Root open={isRemovingProductFromStock} onOpenChange={setIsRemovingProductFromStock}>
