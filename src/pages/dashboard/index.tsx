@@ -132,7 +132,7 @@ const Dashboard: NextPage = () => {
     <Base>
       <MainContainer>
         <WelcomeMessage>Bem vindo ao MEIHelp</WelcomeMessage>
-        <SectionTitle>Treinamentos</SectionTitle>
+        <SectionTitle>Vídeos Recomendados e Treinamentos</SectionTitle>
         {!isLoadingTrainings && (
           <TrainingsContainer ref={sliderRef} className="keen-slider">
             {trainings.map((training) => (

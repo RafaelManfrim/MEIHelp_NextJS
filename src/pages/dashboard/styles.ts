@@ -10,6 +10,8 @@ export const WelcomeMessage = styled.h1`
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
+  color: var(--blue);
+  text-shadow: 0 2px 3px var(--light-blue);
 `
 
 export const SectionTitle = styled.h2`
