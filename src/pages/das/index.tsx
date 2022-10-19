@@ -74,14 +74,14 @@ const Das: NextPage = () => {
             </tr>
           </thead>
           <tbody>
-            {loadingDasList ? new Array(12).fill(10).map((skeleton) => (
-              <tr>
-                {new Array(skeleton).fill(10).map((skeleton) => (
-                  <td><Skeleton /></td>
+            {loadingDasList ? new Array(12).fill(10).map((skeleton, i) => (
+              <tr key={i}>
+                {new Array(skeleton).fill(10).map((skeleton, i) => (
+                  <td key={i}><Skeleton /></td>
                 ))}
               </tr>
             )) : filteredDasList.map(das => (
-              <tr>
+              <tr key={das.id}>
                 <td>{`${monthConverter(das.mes)}/${das.ano}`}</td>
                 <td>{das.apurado}</td>
                 <DasSituation situacao={das.situacao}>{das.situacao}</DasSituation>
