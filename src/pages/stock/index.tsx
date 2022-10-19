@@ -3,7 +3,7 @@ import { Stocks } from '../../components/Stock/Stocks'
 import { Products } from '../../components/Stock/Products'
 import { Providers } from '../../components/Stock/Providers'
 
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from './styles'
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '../../styles/pages/stock'
 
 export interface ProviderDTO {
   id: number

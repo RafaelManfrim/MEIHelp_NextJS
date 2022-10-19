@@ -24,7 +24,7 @@ import {
   ActivityTitle,
   MainContainer,
   SectionTitle,
-} from './styles'
+} from '../../styles/pages/activities'
 
 export interface Activity {
   id: number

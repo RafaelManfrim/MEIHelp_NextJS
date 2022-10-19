@@ -9,7 +9,7 @@ import { api } from '../../services/api'
 import { monthConverter } from '../../utils/convertters'
 import { dateFormatter } from '../../utils/formatters'
 
-import { DasSituation, DasTable, MainContainer, SectionTitle } from './styles'
+import { DasSituation, DasTable, MainContainer, SectionTitle } from '../../styles/pages/das'
 
 import 'react-loading-skeleton/dist/skeleton.css'
 interface DasDTO {
@@ -57,7 +57,7 @@ const Das: NextPage = () => {
   return (
     <Base>
       <MainContainer>
-        <SectionTitle>DAS</SectionTitle>
+        <SectionTitle>Documento de Arrecadação do Simples Nacional</SectionTitle>
         <DasTable>
           <thead>
             <tr>

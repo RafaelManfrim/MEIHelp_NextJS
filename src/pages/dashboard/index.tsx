@@ -22,7 +22,7 @@ import {
   TrainingDescription,
   UserContainer,
   UsersContainer,
-} from './styles'
+} from '../../styles/pages/dashboard'
 
 import '@vime/core/themes/default.css'
 import 'keen-slider/keen-slider.min.css'

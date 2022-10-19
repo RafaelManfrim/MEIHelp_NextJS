@@ -24,7 +24,7 @@ import {
   SectionTitle,
   Row,
   DissatisfactionContainerTitle,
-} from './styles'
+} from '../../styles/pages/profile'
 
 const Profile: NextPage = () => {
   const { user, signOut } = useAuth()

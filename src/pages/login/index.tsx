@@ -22,7 +22,7 @@ import {
   LogoLogin,
   FormDescription,
   ErrorInformation,
-} from './styles'
+} from '../../styles/pages/login'
 
 const Login: NextPage = () => {
   const [isRegistering, setIsRegistering] = useState(false)
