@@ -8,6 +8,10 @@ import { cepMask, cnpjMask, phoneMask } from '../../utils/masks'
 import { Base } from '../../components/template'
 import { api } from '../../services/api'
 
+const Player = dynamic(() => import('../../components/Player'), {
+  ssr: false,
+})
+
 import {
   MainContainer,
   WelcomeMessage,
@@ -22,19 +26,6 @@ import {
 
 import '@vime/core/themes/default.css'
 import 'keen-slider/keen-slider.min.css'
-
-const Player = dynamic(
-  () => import('@vime/react').then((module) => module.Player),
-  { ssr: false },
-)
-const Youtube = dynamic(
-  () => import('@vime/react').then((module) => module.Youtube),
-  { ssr: false },
-)
-const DefaultUi = dynamic(
-  () => import('@vime/react').then((module) => module.DefaultUi),
-  { ssr: false },
-)
 
 interface Training {
   id: number
@@ -137,10 +128,7 @@ const Dashboard: NextPage = () => {
           <TrainingsContainer ref={sliderRef} className="keen-slider">
             {trainings.map((training) => (
               <TrainingContainer key={training.id} className="keen-slider__slide">
-                <Player>
-                  <Youtube videoId={training.url.split('/')[3]} />
-                  <DefaultUi />
-                </Player>
+                <Player videoId={training.url.split('/')[3]} />
                 <TrainingTitle>{training.title}</TrainingTitle>
                 <TrainingDescription>{training.description}</TrainingDescription>
               </TrainingContainer>
