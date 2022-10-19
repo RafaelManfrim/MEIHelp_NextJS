@@ -23,7 +23,9 @@ api.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      if (error.response?.data?.code === 'token_not_valid') {
+      const errorResponse = error.response as any
+
+      if (errorResponse.data?.code === 'token_not_valid') {
         cookies = parseCookies()
         const { 'meihelp.refreshToken': refreshToken } = cookies
         const originalConfig = error.config
