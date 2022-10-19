@@ -7,7 +7,7 @@ import { Button } from '../Button';
 import { api } from '../../services/api';
 import { phoneMask } from '../../utils/masks';
 
-import { ActionsTableData, ContentContainer, CreateButtonContainer, SectionTitle, TableContainer } from "../../pages/stock/styles";
+import { ActionsTableData, ContentContainer, CreateButtonContainer, SectionTitle, TableContainer } from "../../styles/pages/stock";
 import { CreateProviderModal } from './Modals/Providers/CreateProviderModal';
 import { ConfirmProviderExclusionModal } from './Modals/Providers/ConfirmProviderExclusion';
 import { EditProviderModal } from './Modals/Providers/EditProviderModal';

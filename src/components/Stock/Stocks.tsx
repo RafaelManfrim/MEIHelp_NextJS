@@ -9,7 +9,7 @@ import { Stock as StockComponent } from './components/Stock'
 import { CreateStockModal } from './Modals/Stock/CreateStockModal';
 import { api } from '../../services/api';
 
-import { ContentContainer, CreateButtonContainer, SectionTitle } from "../../pages/stock/styles";
+import { ContentContainer, CreateButtonContainer, SectionTitle } from "../../styles/pages/stock";
 
 export function Stocks() {
   const [stocks, setStocks] = useState<StockDTO[]>([])

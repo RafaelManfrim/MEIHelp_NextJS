@@ -15,7 +15,7 @@ import { AddProviderToProductModal } from './Modals/Product/AddProviderToProduct
 import { CreateProductModal } from './Modals/Product/CreateProductModal';
 import { EditProductModal } from './Modals/Product/EditProductModal';
 
-import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../pages/stock/styles";
+import { ActionsTableData, ContentContainer, CreateButtonContainer, PopoverClose, PopoverContent, ProvidersTableData, SectionTitle, TableContainer } from "../../styles/pages/stock";
 
 export function Products() {
   const [products, setProducts] = useState<ProductDTO[]>([]);
