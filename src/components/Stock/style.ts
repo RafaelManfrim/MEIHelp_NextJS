@@ -43,6 +43,7 @@ export const StockComponentContent = styled.div`
     border: 1px solid var(--gray);
     border-radius: 6px;
     margin: 1rem 0;
+    overflow-x: auto;
 
     thead {
       tr {

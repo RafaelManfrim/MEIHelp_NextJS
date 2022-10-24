@@ -20,6 +20,7 @@ export const DasTable = styled.table`
   width: 100%;
   margin-bottom: 1rem;
   border: 1px solid var(--gray);
+  overflow-x: auto;
 
   thead {
     background-color: var(--light-blue);

@@ -115,7 +115,7 @@ export function Stock({ stock, onAddProductToStock, onEdit, onDelete, onRemovePr
       <StockComponentHeader onClick={handleChangeIsExpanded}>
         <div>
           <strong>{stock.name}</strong>
-          <p>{stock.stock_products.length} items</p>
+          <p>{stock.stock_products.length} itens</p>
         </div>
         {isExpanded ? <CaretUp size={20} /> : <CaretDown size={20} />}
       </StockComponentHeader>
