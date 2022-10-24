@@ -18,6 +18,7 @@ export const SectionTitle = styled.h2`
 export const DasTable = styled.table`
   border-collapse: collapse;
   width: 100%;
+  max-width: 100%;
   margin-bottom: 1rem;
   border: 1px solid var(--gray);
   overflow-x: auto;

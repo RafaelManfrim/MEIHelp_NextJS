@@ -38,6 +38,7 @@ export const StockComponentContent = styled.div`
 
   table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid var(--gray);
