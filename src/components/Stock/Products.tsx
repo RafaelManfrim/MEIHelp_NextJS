@@ -173,8 +173,8 @@ export function Products() {
                 </ProvidersTableData>
                 <ActionsTableData>
                   <div>
-                    <Button text="Editar produto" onClick={() => handleEditProduct(product.id)} style={{ width: 'auto' }} />
-                    <Button text="Excluir produto" color="red-light" onClick={() => handleDeleteProduct(product.id)} style={{ width: 'auto' }} />
+                    <Button text="Editar" onClick={() => handleEditProduct(product.id)} style={{ width: 'auto' }} />
+                    <Button text="Excluir" color="red-light" onClick={() => handleDeleteProduct(product.id)} style={{ width: 'auto' }} />
                   </div>
                 </ActionsTableData>
               </tr>

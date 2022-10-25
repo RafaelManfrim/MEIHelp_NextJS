@@ -95,8 +95,8 @@ export function Providers() {
                 <td>{phoneMask(provider.phone)}</td>
                 <ActionsTableData>
                   <div>
-                    <Button text="Editar fornecedor" color="light-blue" onClick={() => handleEditProvider(provider.id)} style={{ width: 'auto' }} />
-                    <Button text="Excluir fornecedor" color="red-light" onClick={() => handleDeleteProvider(provider.id)} style={{ width: 'auto' }} />
+                    <Button text="Editar" color="light-blue" onClick={() => handleEditProvider(provider.id)} style={{ width: 'auto' }} />
+                    <Button text="Excluir" color="red-light" onClick={() => handleDeleteProvider(provider.id)} style={{ width: 'auto' }} />
                   </div>
                 </ActionsTableData>
               </tr>

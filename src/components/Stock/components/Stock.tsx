@@ -171,7 +171,7 @@ export function Stock({ stock, onAddProductToStock, onEdit, onDelete, onRemovePr
                     ))}
                   </ProvidersTableData>
                   <td>
-                    <Button text="Remover do estoque" color="red-light" style={{ width: 'auto' }} onClick={() => handleRemoveProductFromStock(product.id)} />
+                    <Button text="Remover" color="red-light" style={{ width: 'auto' }} onClick={() => handleRemoveProductFromStock(product.id)} />
                   </td>
                 </tr>
               ))}
